@@ -1,0 +1,168 @@
+@import "src/assets/themes/DarkTheme"
+
+.dashboard
+	width: 100%
+	min-height: 120vh
+	position: relative
+
+	.grid
+		width: 100%
+		height: 100%
+		display: flex
+		flex-direction: row
+		margin-top: 100px
+		position: absolute
+		top: 0
+		left: 0
+
+		.spacer
+			width: 12%
+
+		.days
+			width: 88%
+			display: flex
+			flex-direction: row
+			justify-content: space-evenly
+
+			.day
+				width: 100%
+				border-left: 1px solid $light
+				height: 100%
+				position: relative
+
+				.marker
+					width: 100%
+					padding: 5px
+					font-size: 12px
+					position: absolute
+					top: -45px
+					right: 0
+					left: 0
+					text-align: center
+					border-top: 1px solid $light
+					border-bottom: 1px solid $light
+					text-wrap: none
+					display: flex
+					flex-direction: column
+
+				.weekend
+					background-color: $medium
+
+			.lastDay
+				border-right: 1px solid $light
+
+	.users
+		//background-color: red
+		position: absolute
+		top: 100px
+		left: 0
+		width: 100%
+		height: 100%
+		display: flex
+		flex-direction: column
+		z-index: 10
+
+		.user
+			//background-color: white
+			padding: 10px 0
+			display: flex
+			flex-direction: row
+			margin-bottom: 10px
+			//color: black
+
+			.name
+				width: 12.2%
+			//background-color: #417ebb
+
+			.events
+				width: 89%
+				//background-color: #fca311
+				display: flex
+				flex-direction: column
+				overflow-x: hidden
+
+				.event
+					width: 300px
+					background-color: lighten($medium, 5)
+					margin: 5px 0
+					overflow: hidden
+					-webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.42)
+					-moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.42)
+					box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.42)
+					transition: all .2s ease-in-out
+
+					&:hover
+						background-color: lighten($medium, 15)
+
+					.dates
+						width: 100%
+						padding: 5px
+						display: flex
+						flex-direction: row
+						font-size: 12px
+						align-items: center
+						flex-wrap: wrap
+
+						.arrow
+							flex: 2
+							min-width: 20px
+							padding: 0 10px
+							position: relative
+							margin: 5px
+
+							.line
+								width: 100%
+								height: 1px
+								background-color: lighten($light, 20)
+
+							i
+								position: absolute
+								right: 8px
+								top: -5px
+								color: lighten($light, 20)
+
+					.information
+						width: 100%
+						padding: 5px
+						font-size: 12px
+						display: flex
+						flex-direction: row
+						justify-content: space-between
+						flex-wrap: wrap
+						align-items: center
+
+						.city
+							flex: 2
+							margin-bottom: 5px
+							display: flex
+							flex-direction: row
+							justify-content: flex-start
+							flex-wrap: wrap
+							font-weight: bold
+							text-transform: uppercase
+
+							.info
+								margin: 0 5px 5px 0
+
+						.icons
+							flex: 1
+							min-width: 60%
+							display: flex
+							flex-direction: row
+							flex-wrap: wrap
+							margin-bottom: 5px
+							justify-content: flex-end
+							align-items: center
+							text-align: center
+
+							i
+								margin: 5px
+								font-size: 14px
+								cursor: pointer
+								color: #ABB2B9
+
+							.trash
+								color: #EC7063
+
+							.alert
+								color: #fca311

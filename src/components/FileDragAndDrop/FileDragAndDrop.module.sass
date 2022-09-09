@@ -1,0 +1,131 @@
+.fileDragAndDrop
+	flex: 1
+	padding: 20px
+
+	.dropZone
+		width: 100%
+		min-height: 220px
+		padding: 30px 10px
+		border: 2px dashed #445875
+		display: flex
+		flex-direction: column
+		justify-content: center
+		align-items: center
+		color: white
+		margin-top: 20px
+
+		.cursorIgnore
+			text-align: center
+			display: flex
+			flex-direction: column
+			justify-content: center
+			align-items: center
+			pointer-events: none
+
+			i
+				color: #C39BD3
+				font-size: 40px
+
+			.title
+				width: 50%
+				position: relative
+				text-align: center
+				margin: 30px
+
+				.border
+					width: 100%
+					height: 1px
+					background-color: white
+
+				.label
+					width: 60%
+					padding: 0 15px
+					background-color: #10161e
+					position: absolute
+					top: -10px
+					left: 19%
+					right: 0
+					z-index: 100
+					text-transform: uppercase
+					font-size: 12px
+
+			.description
+				width: 40%
+				text-align: center
+				font-size: 13px
+
+	.over
+		background-color: #2d4053
+
+		.cursorIgnore
+
+			i
+				color: white
+				font-size: 60px
+
+	.fileList
+		width: 100%
+		margin-top: 30px
+
+		.file
+			width: 100%
+			display: flex
+			flex-direction: row
+			justify-content: space-between
+			align-items: center
+			color: white
+			border-bottom: 1px solid #37495f
+			padding: 8px 0
+			cursor: pointer
+
+			a
+				display: flex
+				flex-direction: row
+				align-items: center
+
+				.typeIcon
+					font-size: 25px
+					color: #B2BABB
+					margin-right: 10px
+
+					.pdf
+						color: #F1948A
+
+					.excel
+						color: #52BE80
+
+					.word
+						color: #5499C7
+
+					.power
+						color: #F8C471
+
+					.image
+						color: #D7BDE2
+
+					.csv
+						color: #B2BABB
+
+				.tailNumber
+					flex: 3
+					display: flex
+					flex-direction: column
+					line-height: 15px
+
+					.fileName
+						font-size: 15px
+
+					.author
+						font-size: 10px
+
+			.iconBar
+
+				i
+					margin: 0 15px
+					cursor: pointer
+
+				.download
+					color: #C39BD3
+
+				.delete
+					color: #F1948A
