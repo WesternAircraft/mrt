@@ -11,7 +11,7 @@ const AuthenticateViaAD = async (instance) => {
 			console.log("Error signing user in.")
 			return true;
 		}
-		console.log("User successfully authenticated. Storing User.")
+		console.log("User successfully authenticated. Storing User.");
 		localStorage.setItem('beacon_user', signInResult.id);
 		return signInResult;
 	}

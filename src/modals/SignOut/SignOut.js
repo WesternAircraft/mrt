@@ -3,10 +3,9 @@ import Modal from "../../wrappers/Modal/Modal";
 import PropTypes from "prop-types";
 import ButtonBar from "../../components/ButtonBar/ButtonBar";
 import Button from "../../components/Button/Button";
-import SIGN_USER_OUT from '../../utils/functions/SignUserOut';
 import {useMsal} from "@azure/msal-react";
 import {connect} from "react-redux";
-import {SignUserOut} from "../../redux/actions/SignUserOut";
+import SignUserOut from "../../utils/functions/SignUserOut";
 
 const SignOut = (props) => {
 
@@ -15,7 +14,7 @@ const SignOut = (props) => {
 	} = useMsal();
 
 	const SignOut = async () => {
-		await SIGN_USER_OUT(instance);
+		await SignUserOut(instance);
 		await props.SignUserOut();
 	}
 

@@ -1,11 +1,14 @@
 import styles from './LogIn.module.sass';
-import AuthenticateViaAD from "../../utils/functions/AuthenticateViaAD";
 import {useMsal} from "@azure/msal-react";
 import {GetUserFromIO} from "../../redux/actions/GetUserFromIO";
 import {SetAuthedUser} from "../../redux/actions/SetAuthedUser";
 import {connect} from "react-redux";
 import ButtonBar from "../../components/ButtonBar/ButtonBar";
 import Button from "../../components/Button/Button";
+import SignUserIn from "../../utils/functions/SignUserIn";
+import {LOCAL_ADDRESS} from "../../config/Network";
+import PermissionCheck from "../../utils/functions/PermissionCheck";
+import {ForceUserOut} from "../../redux/actions/ForceUserOut";
 
 const LogIn = (props) => {
 
@@ -14,11 +17,19 @@ const LogIn = (props) => {
 	} = useMsal();
 
 	const Authenticate = async () => {
-		const authResult = await AuthenticateViaAD(instance);
+		const authResult = await SignUserIn(instance);
 		if (authResult) {
 			const result = await props.GetUserFromIO(authResult.id);
 			if (result.code === 200) {
-				props.SetAuthedUser({...result.payload})
+				if (PermissionCheck(result.payload.permissions, ['MRT_FULL_ADMIN'])) {
+					console.log("Authorized!!!!!")
+					localStorage.setItem('beacon_user', result.payload._id);
+					props.SetAuthedUser({...result.payload})
+				} else {
+					window.location = LOCAL_ADDRESS + '/unauthorized';
+					props.ForceUserOut(null);
+					console.log("UN-AUTHORIZED!!!!!")
+				}
 			}
 		}
 	}
@@ -40,7 +51,8 @@ const LogIn = (props) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		GetUserFromIO: (id) => dispatch(GetUserFromIO(id)),
-		SetAuthedUser: (user) => dispatch(SetAuthedUser(user))
+		SetAuthedUser: (user) => dispatch(SetAuthedUser(user)),
+		ForceUserOut: () => dispatch(ForceUserOut()),
 	};
 };
 

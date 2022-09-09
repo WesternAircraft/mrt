@@ -1,11 +1,21 @@
 import styles from './NavigationBar.module.sass';
 import {connect} from "react-redux";
-import SignOut from "../../modals/SignOut/SignOut";
-import {useState} from "react";
+import {useMsal} from "@azure/msal-react";
+import SignUserOut from "../../utils/functions/SignUserOut";
+import {ForceUserOut} from "../../redux/actions/ForceUserOut";
 
 const NavigationBar = (props) => {
 
-	const [ShowSignOut, SetShowSignOut] = useState(false);
+	const {
+		instance
+	} = useMsal();
+
+	const SignOut = async () => {
+		props.ForceUserOut();
+		const res = await SignUserOut(instance);
+		localStorage.removeItem('beacon_user');
+		console.log(res);
+	}
 
 	return <div className={styles.navigationBar}>
 		<div className={styles.left}>
@@ -18,10 +28,9 @@ const NavigationBar = (props) => {
 			</div>
 			<i
 				className="fa-regular fa-arrow-right-from-bracket"
-				onClick={() => SetShowSignOut(true)}
+				onClick={() => SignOut()}
 			/>
 		</div>
-		<SignOut show={ShowSignOut} handleClose={() => SetShowSignOut(false)}/>
 	</div>
 }
 
@@ -31,4 +40,10 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default connect(mapStateToProps, null)(NavigationBar);
+const mapDispatchToProps = (dispatch) => {
+	return {
+		ForceUserOut: () => dispatch(ForceUserOut())
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavigationBar);
