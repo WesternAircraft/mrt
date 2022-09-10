@@ -11,11 +11,9 @@ const UserBooking = (props) => {
 	const [RightFlag, SetRightFlag] = useState(0);
 
 	const CalculateLeft = () => {
-		console.log("RUNNING...")
 		const CalendarStart = moment(props.startDate);
 		const EventStart = moment(props.event.start_date);
 		const diff = EventStart.diff(CalendarStart, 'days');
-		console.log("Front Overflow: " + diff)
 		let Off = diff;
 		if (diff < 0) {
 			SetLeftFlag(diff * -1)
@@ -24,9 +22,7 @@ const UserBooking = (props) => {
 		SetOffset(Off);
 		const EventEnd = moment(props.event.end_date);
 		const Duration = EventEnd.diff(EventStart, 'days') + (diff < 0 ? diff : 0) + 1;
-		console.log("Duration: " + Duration)
 		const Overflow = 14 - (Off + Duration);
-		console.log("Back Overflow: " + Overflow)
 		if (Overflow < 0) {
 			SetWidth(Duration + Overflow);
 			SetRightFlag(Overflow * -1);

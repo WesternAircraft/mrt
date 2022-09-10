@@ -3,6 +3,8 @@ import {connect} from "react-redux";
 import {useMsal} from "@azure/msal-react";
 import SignUserOut from "../../utils/functions/SignUserOut";
 import {ForceUserOut} from "../../redux/actions/ForceUserOut";
+import WAI_LOGO from '../../assets/logos/western_aircraft_3.png';
+import {Link} from "react-router-dom";
 
 const NavigationBar = (props) => {
 
@@ -19,8 +21,21 @@ const NavigationBar = (props) => {
 
 	return <div className={styles.navigationBar}>
 		<div className={styles.left}>
+			<img src={WAI_LOGO} alt=""/>
 		</div>
 		<div className={styles.center}>
+			<Link to={'/'}>
+				<div className={styles.item}>Dashboard</div>
+			</Link>
+			<Link to={'/airplanes'}>
+				<div className={styles.item}>Airplanes</div>
+			</Link>
+			<Link to={'/tooling'}>
+				<div className={styles.item}>Tooling</div>
+			</Link>
+			<Link to={'/work-orders'}>
+				<div className={styles.item}>Work Orders</div>
+			</Link>
 		</div>
 		<div className={styles.right}>
 			<div className={styles.name}>

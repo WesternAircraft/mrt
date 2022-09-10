@@ -19,12 +19,21 @@ const Dashboard = (props) => {
 	const [Events, SetEvents] = useState([]);
 
 	const GetEvents = async () => {
-		const results = await NETWORK_ADAPTER.get('/MRT/get-all-events');
+		const results = await NETWORK_ADAPTER.get('/MRT/get-all-events/' + moment(StartDate).format("YYYY-MM-DD"));
 		if (results.code === 200) {
 			SetEvents([...results.payload]);
 			return;
 		}
 		console.log("Error: " + results.message)
+	}
+
+	const ChangeStartDate = (days) => {
+		if (days >= 0) {
+			SetStartDate(moment(StartDate).tz("America/Boise").add(days, 'days').format("MM-DD-YYYY"));
+		} else {
+			SetStartDate(moment(StartDate).tz("America/Boise").subtract(days * -1, 'days').format("MM-DD-YYYY"));
+		}
+
 	}
 
 	useEffect(() => {
@@ -34,9 +43,45 @@ const Dashboard = (props) => {
 
 	return <PageWrapper>
 		<div className={styles.dashboard}>
-			<ButtonBar position={'right'}>
-				<Button long handleClick={() => SetViewAdd(true)} color={'#14394c'}>Add Booking</Button>
-			</ButtonBar>
+			<div className={styles.topMenu}>
+				<div className={styles.directions}>
+					<i
+						className="fa-solid fa-angles-left"
+						onClick={() => ChangeStartDate(-14)}
+					/>
+					<i
+						className="fa-solid fa-angles-right"
+						onClick={() => ChangeStartDate(14)}
+					/>
+				</div>
+				<div className={styles.legend}>
+					<div className={styles.item}>
+						<i className={[styles.alert, " fa-solid fa-triangle-exclamation"].join(' ')}/>
+						<div>= Alert</div>
+					</div>
+					<div className={styles.item}>
+						<i className="fa-regular fa-plane"/>
+						<div>= Airplane information</div>
+					</div>
+					<div className={styles.item}>
+						<i className="fa-regular fa-folders"/>
+						<div>= Uploaded Files</div>
+					</div>
+					<div className={styles.item}>
+						<i className="fa-regular fa-receipt"/>
+						<div>= Work Order</div>
+					</div>
+					<div className={styles.item}>
+						<i className="fa-regular fa-wrench"/>
+						<div>= Tooling</div>
+					</div>
+				</div>
+				<div className={styles.addButton}>
+					<ButtonBar position={'right'}>
+						<Button long handleClick={() => SetViewAdd(true)} color={'#14394c'}>Add Booking</Button>
+					</ButtonBar>
+				</div>
+			</div>
 			<div className={styles.grid}>
 				<div className={styles.spacer}/>
 				<div className={styles.days}>

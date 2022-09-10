@@ -1,0 +1,50 @@
+@import "src/assets/themes/DarkTheme"
+
+.title
+	font-weight: bold
+	font-size: 26px
+	font-family: $font-title
+
+.form
+	width: 100%
+	margin-top: 30px
+	display: flex
+	flex-direction: column
+
+	.question
+		font-size: 18px
+		margin-bottom: 5px
+		font-weight: bold
+		text-align: center
+
+	.explanation
+		font-size: 16px
+		margin-bottom: 20px
+		text-align: center
+
+	.row
+		display: flex
+		flex-direction: row
+		justify-content: space-between
+
+	.section
+		flex: 1
+		margin-bottom: 10px
+		margin-right: 10px
+
+		.label
+			margin-bottom: 3px
+			font-size: 12px
+			text-transform: uppercase
+			font-weight: bold
+			font-family: $font-title
+
+			.required
+				color: #EC7063
+
+	.errors
+		color: #EC7063
+		font-weight: bold
+		width: 100%
+		text-align: center
+		margin-top: 10px

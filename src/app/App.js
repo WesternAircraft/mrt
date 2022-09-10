@@ -12,6 +12,9 @@ import Unauthorized from "../views/Unauthorized/Unauthorized";
 import {LOCAL_ADDRESS} from "../config/Network";
 import {ForceUserOut} from "../redux/actions/ForceUserOut";
 import PermissionCheck from "../utils/functions/PermissionCheck";
+import AirplanesList from "../views/AirplanesList/AirplanesList";
+import {GetAllAirplanes} from "../redux/actions/GetAllAirplanes";
+import ViewAirplane from "../views/ViewAirplane/ViewAirplane";
 
 const App = (props) => {
 
@@ -30,6 +33,7 @@ const App = (props) => {
 	}
 
 	useEffect(() => {
+		props.GetAllAirplanes();
 		if (!props.UsersReducer.AuthedUser) {
 			console.log("Checking for stored user.")
 			const storedUser = localStorage.getItem('beacon_user');
@@ -51,6 +55,8 @@ const App = (props) => {
 					props.UsersReducer.AuthedUser && props.UsersReducer.AuthedUser.azureId
 						? <Switch>
 							<Route path={'/'} exact component={Dashboard}/>
+							<Route path={'/airplanes'} exact component={AirplanesList}/>
+							<Route path={'/airplanes/:id'} exact component={ViewAirplane}/>
 						</Switch>
 						: <Route path={'/'} exact component={LogIn}/>
 				}
@@ -71,7 +77,8 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		GetUserFromIO: (id) => dispatch(GetUserFromIO(id)),
 		SetAuthedUser: (user) => dispatch(SetAuthedUser(user)),
-		ForceUserOut: () => dispatch(ForceUserOut())
+		ForceUserOut: () => dispatch(ForceUserOut()),
+		GetAllAirplanes: () => dispatch(GetAllAirplanes())
 	};
 };
 
