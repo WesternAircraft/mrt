@@ -2,12 +2,16 @@ import styles from './FullModal.module.sass';
 import PropTypes from "prop-types";
 
 const FullModal = (props) => {
-	return <div className={styles.fullModal}>
+	return <div className={styles.fullModal}
+	            style={{
+		            pointerEvents: props.show ? 'auto' : 'none'
+	            }}
+	>
 		<div className={styles.background} style={{
-			opacity: props.show ? 0.8 : 0
+			opacity: props.show ? 0.9 : 0,
 		}}/>
 		<div className={styles.overlay} style={{
-			top: props.show ? '10vh' : '-100vh',
+			top: props.show ? '10%' : '-100vh',
 		}}
 		>
 			<div className={styles.topBar}>

@@ -14,12 +14,12 @@ const Modal = (props) => {
 		}
 	}, [props.show])
 
-	return <div className={styles.modal} style={{top: Offset + 'px'}}>
+	return <div className={styles.modal} style={{top: Offset + 'px', pointerEvents: props.show ? 'auto' : 'none'}}>
 		<div className={styles.background} style={{
-			opacity: props.show ? 0.8 : 0
+			opacity: props.show ? 0.9 : 0
 		}}/>
 		<div className={styles.overlay} style={{
-			top: props.show ? '30%' : '-100vh',
+			top: props.show ? '20%' : '-100vh',
 		}}
 		>
 			<div className={styles.topBar}>
