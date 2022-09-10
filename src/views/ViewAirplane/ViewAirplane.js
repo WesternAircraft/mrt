@@ -8,6 +8,14 @@ import EditCustomerContactInformation
 import EditGeneralWarranty from "../../components/EditGeneralWarranty/EditGeneralWarranty";
 import EditEngineOne from "../../components/EditEngineOne/EditEngineOne";
 import EditEngineTwo from "../../components/EditEngineTwo/EditEngineTwo";
+import EditEngineThree from "../../components/EditEngineThree/EditEngineThree";
+import EditAPUOne from "../../components/EditAPUOne/EditAPUOne";
+import EditAPUTwo from "../../components/EditAPUTwo/EditAPUTwo";
+import EditAPUThree from "../../components/EditAPUThree/EditAPUThree";
+import EditAirframe from "../../components/EditAirframe/EditAirframe";
+import EditEngineWarranty from "../../components/EditEngineWarranty/EditEngineWarranty";
+import EditAPUWarranty from "../../components/EditAPUWarranty/EditAPUWarranty";
+import EditAirframeWarranty from "../../components/EditAirframeWarranty/EditAirframeWarranty";
 
 const ViewAirplane = (props) => {
 
@@ -19,6 +27,14 @@ const ViewAirplane = (props) => {
 	const [ShowEditGeneralWarranty, SetEditGeneralWarranty] = useState(false);
 	const [ShowEditEngineOne, SetEditEngineOne] = useState(false);
 	const [ShowEditEngineTwo, SetEditEngineTwo] = useState(false);
+	const [ShowEditEngineThree, SetEditEngineThree] = useState(false);
+	const [ShowEditAPUOne, SetEditAPUOne] = useState(false);
+	const [ShowEditAPUTwo, SetEditAPUTwo] = useState(false);
+	const [ShowEditAPUThree, SetEditAPUThree] = useState(false);
+	const [ShowEditAirframe, SetEditAirframe] = useState(false);
+	const [ShowEditEngineWarranty, SetEditEngineWarranty] = useState(false);
+	const [ShowEditAPUWarranty, SetEditAPUWarranty] = useState(false);
+	const [ShowEditAirframeWarranty, SetEditAirframeWarranty] = useState(false);
 
 	const GetAirplane = async () => {
 		const result = await NETWORK_ADAPTER.get('/MRT/get-airplane/' + props.match.params.id);
@@ -322,7 +338,10 @@ const ViewAirplane = (props) => {
 				<div className={styles.section}>
 					<div className={styles.title}>
 						<div>Engine #3 Information</div>
-						<i className="fa-regular fa-pen-to-square"/>
+						<i
+							className="fa-regular fa-pen-to-square"
+							onClick={() => SetEditEngineThree(true)}
+						/>
 					</div>
 					<div className={styles.list}>
 						<div className={styles.information}>
@@ -370,7 +389,10 @@ const ViewAirplane = (props) => {
 				<div className={styles.section}>
 					<div className={styles.title}>
 						<div>Engine Warranty Information</div>
-						<i className="fa-regular fa-pen-to-square"/>
+						<i
+							className="fa-regular fa-pen-to-square"
+							onClick={() => SetEditEngineWarranty(true)}
+						/>
 					</div>
 					<div className={styles.list}>
 						<div className={styles.information}>
@@ -397,8 +419,8 @@ const ViewAirplane = (props) => {
 							<div className={styles.label}>Contact Phone</div>
 							<div className={styles.num}>
 								{
-									Airplane.engine_contact_phone
-										? Airplane.engine_contact_phone
+									Airplane.engine_contact_number
+										? Airplane.engine_contact_number
 										: '-'
 								}
 							</div>
@@ -420,7 +442,10 @@ const ViewAirplane = (props) => {
 				<div className={styles.section}>
 					<div className={styles.title}>
 						<div>APU #1 Information</div>
-						<i className="fa-regular fa-pen-to-square"/>
+						<i
+							className="fa-regular fa-pen-to-square"
+							onClick={() => SetEditAPUOne(true)}
+						/>
 					</div>
 					<div className={styles.list}>
 						<div className={styles.information}>
@@ -468,7 +493,10 @@ const ViewAirplane = (props) => {
 				<div className={styles.section}>
 					<div className={styles.title}>
 						<div>APU #2 Information</div>
-						<i className="fa-regular fa-pen-to-square"/>
+						<i
+							className="fa-regular fa-pen-to-square"
+							onClick={() => SetEditAPUTwo(true)}
+						/>
 					</div>
 					<div className={styles.list}>
 						<div className={styles.information}>
@@ -516,7 +544,10 @@ const ViewAirplane = (props) => {
 				<div className={styles.section}>
 					<div className={styles.title}>
 						<div>APU #3 Information</div>
-						<i className="fa-regular fa-pen-to-square"/>
+						<i
+							className="fa-regular fa-pen-to-square"
+							onClick={() => SetEditAPUThree(true)}
+						/>
 					</div>
 					<div className={styles.list}>
 						<div className={styles.information}>
@@ -564,7 +595,10 @@ const ViewAirplane = (props) => {
 				<div className={styles.section}>
 					<div className={styles.title}>
 						<div>APU Warranty Information</div>
-						<i className="fa-regular fa-pen-to-square"/>
+						<i
+							className="fa-regular fa-pen-to-square"
+							onClick={() => SetEditAPUWarranty(true)}
+						/>
 					</div>
 					<div className={styles.list}>
 						<div className={styles.information}>
@@ -581,8 +615,8 @@ const ViewAirplane = (props) => {
 							<div className={styles.label}>Contract #</div>
 							<div className={styles.num}>
 								{
-									Airplane.apu_warranty_contract_number
-										? Airplane.apu_warranty_contract_number
+									Airplane.apu_contract_number
+										? Airplane.apu_contract_number
 										: '-'
 								}
 							</div>
@@ -591,8 +625,8 @@ const ViewAirplane = (props) => {
 							<div className={styles.label}>Contact Phone</div>
 							<div className={styles.num}>
 								{
-									Airplane.apu_contact_phone
-										? Airplane.apu_contact_phone
+									Airplane.apu_contact_number
+										? Airplane.apu_contact_number
 										: '-'
 								}
 							</div>
@@ -614,7 +648,10 @@ const ViewAirplane = (props) => {
 				<div className={styles.section}>
 					<div className={styles.title}>
 						<div>Airframe Information</div>
-						<i className="fa-regular fa-pen-to-square"/>
+						<i
+							className="fa-regular fa-pen-to-square"
+							onClick={() => SetEditAirframe(true)}
+						/>
 					</div>
 					<div className={styles.list}>
 						<div className={styles.information}>
@@ -662,7 +699,10 @@ const ViewAirplane = (props) => {
 				<div className={styles.section}>
 					<div className={styles.title}>
 						<div>Airframe Warranty Information</div>
-						<i className="fa-regular fa-pen-to-square"/>
+						<i
+							className="fa-regular fa-pen-to-square"
+							onClick={() => SetEditAirframeWarranty(true)}
+						/>
 					</div>
 					<div className={styles.list}>
 						<div className={styles.information}>
@@ -679,8 +719,8 @@ const ViewAirplane = (props) => {
 							<div className={styles.label}>Contract #</div>
 							<div className={styles.num}>
 								{
-									Airplane.airframe_warranty_contract_number
-										? Airplane.airframe_warranty_contract_number
+									Airplane.airframe_contract_number
+										? Airplane.airframe_contract_number
 										: '-'
 								}
 							</div>
@@ -689,8 +729,8 @@ const ViewAirplane = (props) => {
 							<div className={styles.label}>Contact Phone</div>
 							<div className={styles.num}>
 								{
-									Airplane.airframe_warranty_phone
-										? Airplane.airframe_warranty_phone
+									Airplane.airframe_contact_number
+										? Airplane.airframe_contact_number
 										: '-'
 								}
 							</div>
@@ -699,8 +739,8 @@ const ViewAirplane = (props) => {
 							<div className={styles.label}>Contact Email</div>
 							<div className={styles.num}>
 								{
-									Airplane.airframe_warranty_email
-										? Airplane.airframe_warranty_email
+									Airplane.airframe_contact_email
+										? Airplane.airframe_contact_email
 										: '-'
 								}
 							</div>
@@ -748,6 +788,70 @@ const ViewAirplane = (props) => {
 							airplane={Airplane}
 							handleClose={() => {
 								SetEditEngineTwo(false);
+								GetAirplane();
+							}}
+						/>
+						<EditEngineThree
+							show={ShowEditEngineThree}
+							airplane={Airplane}
+							handleClose={() => {
+								SetEditEngineThree(false);
+								GetAirplane();
+							}}
+						/>
+						<EditAPUOne
+							show={ShowEditAPUOne}
+							airplane={Airplane}
+							handleClose={() => {
+								SetEditAPUOne(false);
+								GetAirplane();
+							}}
+						/>
+						<EditAPUTwo
+							show={ShowEditAPUTwo}
+							airplane={Airplane}
+							handleClose={() => {
+								SetEditAPUTwo(false);
+								GetAirplane();
+							}}
+						/>
+						<EditAPUThree
+							show={ShowEditAPUThree}
+							airplane={Airplane}
+							handleClose={() => {
+								SetEditAPUThree(false);
+								GetAirplane();
+							}}
+						/>
+						<EditAirframe
+							show={ShowEditAirframe}
+							airplane={Airplane}
+							handleClose={() => {
+								SetEditAirframe(false);
+								GetAirplane();
+							}}
+						/>
+						<EditEngineWarranty
+							show={ShowEditEngineWarranty}
+							airplane={Airplane}
+							handleClose={() => {
+								SetEditEngineWarranty(false);
+								GetAirplane();
+							}}
+						/>
+						<EditAPUWarranty
+							show={ShowEditAPUWarranty}
+							airplane={Airplane}
+							handleClose={() => {
+								SetEditAPUWarranty(false);
+								GetAirplane();
+							}}
+						/>
+						<EditAirframeWarranty
+							show={ShowEditAirframeWarranty}
+							airplane={Airplane}
+							handleClose={() => {
+								SetEditAirframeWarranty(false);
 								GetAirplane();
 							}}
 						/>
