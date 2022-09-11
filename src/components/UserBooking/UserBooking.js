@@ -2,6 +2,7 @@ import styles from './UserBooking.module.sass';
 import PropTypes from "prop-types";
 import {useEffect, useState} from "react";
 import moment from "moment-timezone";
+import {Link} from "react-router-dom";
 
 const UserBooking = (props) => {
 
@@ -56,24 +57,30 @@ const UserBooking = (props) => {
 					{
 						props.event.city
 							? props.event.city
+							: 'No City Listed'
+					}
+				</div>
+				<div className={styles.tail}>
+					{
+						props.event.airplane
+							? props.event.airplane.tail_number
 							: '-'
 					}
 				</div>
 				<div className={styles.tail}>
 					{
-						props.event.tail_number
-							? props.event.tail_number
+						props.event.work_order
+							? props.event.work_order.number
 							: '-'
 					}
 				</div>
 			</div>
 			<div className={styles.icons}>
 				<i className={[styles.alert, " fa-solid fa-triangle-exclamation"].join(' ')}/>
-				<i className="fa-regular fa-plane"/>
-				<i className="fa-regular fa-folders"/>
-				<i className="fa-regular fa-receipt"/>
-				<i className="fa-regular fa-wrench"/>
-				<i className="fa-solid fa-pen-to-square"/>
+				<Link to={'/' + props.event._id}>
+					<i className="fa-solid fa-pen-to-square"/>
+				</Link>
+
 				<i className={[styles.trash, " fa-regular fa-trash-can"].join(' ')}/>
 			</div>
 			<div className={[RightFlag > 0 ? styles.show : '', styles.rightFlag].join(' ')}>{'+' + RightFlag}</div>

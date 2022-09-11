@@ -3,7 +3,6 @@ import {UsersReducer} from "../reducers/UsersReducer";
 import thunk from "redux-thunk";
 import {AirplanesReducer} from "../reducers/AirplanesReducer";
 import {ToolsReducer} from "../reducers/ToolsReducer";
-import {WorkOrdersReducer} from "../reducers/WorkOrdersReducer";
 
 const storeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -12,8 +11,7 @@ const Store = createStore(
 		{
 			UsersReducer,
 			AirplanesReducer,
-			ToolsReducer,
-			WorkOrdersReducer
+			ToolsReducer
 		}
 	),
 	storeEnhancers(

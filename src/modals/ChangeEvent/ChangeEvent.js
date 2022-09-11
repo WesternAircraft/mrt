@@ -1,4 +1,4 @@
-import styles from './AddEvent.module.sass';
+import styles from './ChangeEvent.module.sass';
 import PropTypes from "prop-types";
 import Modal from "../../wrappers/Modal/Modal";
 import ButtonBar from "../../components/ButtonBar/ButtonBar";
@@ -7,18 +7,16 @@ import {useEffect, useState} from "react";
 import NetworkAdapter from "../../api/NetworkAdapter";
 import {connect} from "react-redux";
 
-const AddEvent = (props) => {
+const ChangeEvent = (props) => {
 
 	const NETWORK_ADAPTER = new NetworkAdapter();
 
 	const FormTemplate = {
-		technician: "",
-		type: "",
-		start_date: "",
-		end_date: "",
-		city: "",
-		airplane: null,
-		work_order: null
+		_id: props.event._id,
+		start_date: props.event.start_date,
+		end_date: props.event.end_date,
+		type: props.event.type,
+		city: props.event.city
 	}
 
 	const [Form, SetForm] = useState({...FormTemplate});
@@ -26,13 +24,13 @@ const AddEvent = (props) => {
 
 	const SubmitForm = async () => {
 		console.log(Form)
-		if (!Form.technician || !Form.start_date || !Form.end_date || !Form.type) {
-			SetErrors("Technician, Start Date, End Date, and Event Type are all required fields.");
+		if (!Form.start_date || !Form.end_date || !Form.type) {
+			SetErrors("Start Date, End Date and Type are required fields.");
 			return;
 		}
-		const result = await NETWORK_ADAPTER.post('/MRT/add-user-event', {
+		const result = await NETWORK_ADAPTER.post('/MRT/edit-event', {
 			...Form,
-			created_by: props.UsersReducer.AuthedUser._id
+			updated_by: props.UsersReducer.AuthedUser._id
 		});
 		if (result.code !== 200) {
 			SetErrors(result.message);
@@ -49,18 +47,8 @@ const AddEvent = (props) => {
 	}, [props.show]);
 
 	return <Modal show={props.show} handleClose={props.handleClose}>
-		<div className={styles.title}>Add Calendar Event</div>
+		<div className={styles.title}>Change Event</div>
 		<div className={styles.form}>
-			<div className={styles.section}>
-				<div className={styles.label}>Technician <span className={styles.required}>*</span></div>
-				<select
-					onChange={(e) => SetForm({...Form, technician: e.target.value})}
-					value={Form.technician}
-				>
-					<option value="">-- Select Technician --</option>
-					<option value="622e348b275887aa785538eb">Geoff Schaller</option>
-				</select>
-			</div>
 			<div className={styles.section}>
 				<div className={styles.label}>Event Type <span className={styles.required}>*</span></div>
 				<select
@@ -98,37 +86,19 @@ const AddEvent = (props) => {
 					value={Form.city}
 				/>
 			</div>
-			<div className={styles.row}>
-				<div className={styles.section}>
-					<div className={styles.label}>Airplane</div>
-					<select
-						onChange={(e) => SetForm({...Form, airplane: e.target.value})}
-						value={Form.airplane}
-					>
-						<option value="">-- Select Airplane --</option>
-						{
-							props.AirplanesReducer.Airplanes.map((airplane) => {
-								return <option value={airplane._id}>{airplane.tail_number}</option>
-							})
-						}
-					</select>
-				</div>
-				<div className={styles.section}>
-					<div className={styles.label}>Work Order</div>
-				</div>
-			</div>
 			<ButtonBar position={'right'}>
 				<Button color={'#EC7063'} handleClick={props.handleClose}>Cancel</Button>
-				<Button color={'#7DCEA0'} handleClick={() => SubmitForm()}>Add Event</Button>
+				<Button color={'#7DCEA0'} handleClick={() => SubmitForm()}>Change Event</Button>
 			</ButtonBar>
 			<div className={styles.errors}>{Errors}</div>
 		</div>
 	</Modal>
 }
 
-AddEvent.propTypes = {
+ChangeEvent.propTypes = {
 	show: PropTypes.bool.isRequired,
-	handleClose: PropTypes.func.isRequired
+	handleClose: PropTypes.func.isRequired,
+	event: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => {
@@ -138,4 +108,4 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default connect(mapStateToProps)(AddEvent);
+export default connect(mapStateToProps)(ChangeEvent);

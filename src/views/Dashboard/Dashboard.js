@@ -124,7 +124,10 @@ const Dashboard = (props) => {
 				}
 			</div>
 		</div>
-		<AddEvent show={ViewAdd} handleClose={() => SetViewAdd(false)}/>
+		<AddEvent show={ViewAdd} handleClose={() => {
+			GetEvents();
+			SetViewAdd(false)
+		}}/>
 	</PageWrapper>
 }
 

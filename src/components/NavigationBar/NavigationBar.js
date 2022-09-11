@@ -33,9 +33,6 @@ const NavigationBar = (props) => {
 			<Link to={'/tooling'}>
 				<div className={styles.item}>Tooling</div>
 			</Link>
-			<Link to={'/work-orders'}>
-				<div className={styles.item}>Work Orders</div>
-			</Link>
 		</div>
 		<div className={styles.right}>
 			<div className={styles.name}>

@@ -1,4 +1,4 @@
-import styles from './LinkTechnician.module.sass';
+import styles from './ChangeTechnician.module.sass';
 import PropTypes from "prop-types";
 import Modal from "../../wrappers/Modal/Modal";
 import ButtonBar from "../../components/ButtonBar/ButtonBar";
@@ -7,24 +7,25 @@ import {useEffect, useState} from "react";
 import NetworkAdapter from "../../api/NetworkAdapter";
 import {connect} from "react-redux";
 
-const LinkTechnician = (props) => {
+const ChangeTechnician = (props) => {
 
 	const NETWORK_ADAPTER = new NetworkAdapter();
 
 	const FormTemplate = {
-		_id: props.workOrder._id,
-		technician: "",
+		_id: props.event._id,
+		technician: props.event && props.event.technician && props.event.technician._id ? props.event.technician._id : "",
 	}
 
 	const [Form, SetForm] = useState({...FormTemplate});
 	const [Errors, SetErrors] = useState("");
 
 	const SubmitForm = async () => {
+		console.log(Form)
 		if (!Form.technician) {
-			SetErrors("Technician is a required field.");
+			SetErrors("Technician is a required fields.");
 			return;
 		}
-		const result = await NETWORK_ADAPTER.post('/MRT/link-technician', {
+		const result = await NETWORK_ADAPTER.post('/MRT/edit-event', {
 			...Form,
 			updated_by: props.UsersReducer.AuthedUser._id
 		});
@@ -43,10 +44,10 @@ const LinkTechnician = (props) => {
 	}, [props.show]);
 
 	return <Modal show={props.show} handleClose={props.handleClose}>
-		<div className={styles.title}>Link Technician</div>
+		<div className={styles.title}>Change Technician</div>
 		<div className={styles.form}>
 			<div className={styles.section}>
-				<div className={styles.label}>Technician</div>
+				<div className={styles.label}>Technician <span className={styles.required}>*</span></div>
 				<select
 					onChange={(e) => SetForm({...Form, technician: e.target.value})}
 					value={Form.technician}
@@ -57,23 +58,25 @@ const LinkTechnician = (props) => {
 			</div>
 			<ButtonBar position={'right'}>
 				<Button color={'#EC7063'} handleClick={props.handleClose}>Cancel</Button>
-				<Button color={'#7DCEA0'} handleClick={() => SubmitForm()}>Link Technician</Button>
+				<Button color={'#7DCEA0'} handleClick={() => SubmitForm()}>Change Technician</Button>
 			</ButtonBar>
 			<div className={styles.errors}>{Errors}</div>
 		</div>
 	</Modal>
 }
 
-LinkTechnician.propTypes = {
+ChangeTechnician.propTypes = {
 	show: PropTypes.bool.isRequired,
 	handleClose: PropTypes.func.isRequired,
-	workOrder: PropTypes.object.isRequired
+	event: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => {
 	return {
-		UsersReducer: state.UsersReducer
+		UsersReducer: state.UsersReducer,
+		AirplanesReducer: state.AirplanesReducer,
+		WorkOrdersReducer: state.WorkOrdersReducer
 	};
 };
 
-export default connect(mapStateToProps)(LinkTechnician);
+export default connect(mapStateToProps)(ChangeTechnician);
