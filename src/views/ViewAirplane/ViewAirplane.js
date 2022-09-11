@@ -2,20 +2,20 @@ import styles from './ViewAirplane.module.sass';
 import PageWrapper from "../../wrappers/PageWrapper/PageWrapper";
 import {useEffect, useState} from "react";
 import NetworkAdapter from "../../api/NetworkAdapter";
-import EditAirplaneInformation from "../../components/EditAirplaneInformation/EditAirplaneInformation";
+import EditAirplaneInformation from "../../modals/EditAirplaneInformation/EditAirplaneInformation";
 import EditCustomerContactInformation
-	from "../../components/EditCustomerContactInformation/EditCustomerContactInformation";
-import EditGeneralWarranty from "../../components/EditGeneralWarranty/EditGeneralWarranty";
-import EditEngineOne from "../../components/EditEngineOne/EditEngineOne";
-import EditEngineTwo from "../../components/EditEngineTwo/EditEngineTwo";
-import EditEngineThree from "../../components/EditEngineThree/EditEngineThree";
-import EditAPUOne from "../../components/EditAPUOne/EditAPUOne";
-import EditAPUTwo from "../../components/EditAPUTwo/EditAPUTwo";
-import EditAPUThree from "../../components/EditAPUThree/EditAPUThree";
-import EditAirframe from "../../components/EditAirframe/EditAirframe";
-import EditEngineWarranty from "../../components/EditEngineWarranty/EditEngineWarranty";
-import EditAPUWarranty from "../../components/EditAPUWarranty/EditAPUWarranty";
-import EditAirframeWarranty from "../../components/EditAirframeWarranty/EditAirframeWarranty";
+	from "../../modals/EditCustomerContactInformation/EditCustomerContactInformation";
+import EditGeneralWarranty from "../../modals/EditGeneralWarranty/EditGeneralWarranty";
+import EditEngineOne from "../../modals/EditEngineOne/EditEngineOne";
+import EditEngineTwo from "../../modals/EditEngineTwo/EditEngineTwo";
+import EditEngineThree from "../../modals/EditEngineThree/EditEngineThree";
+import EditAPUOne from "../../modals/EditAPUOne/EditAPUOne";
+import EditAPUTwo from "../../modals/EditAPUTwo/EditAPUTwo";
+import EditAPUThree from "../../modals/EditAPUThree/EditAPUThree";
+import EditAirframe from "../../modals/EditAirframe/EditAirframe";
+import EditEngineWarranty from "../../modals/EditEngineWarranty/EditEngineWarranty";
+import EditAPUWarranty from "../../modals/EditAPUWarranty/EditAPUWarranty";
+import EditAirframeWarranty from "../../modals/EditAirframeWarranty/EditAirframeWarranty";
 
 const ViewAirplane = (props) => {
 

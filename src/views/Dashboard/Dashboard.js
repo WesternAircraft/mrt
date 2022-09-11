@@ -6,7 +6,7 @@ import GenerateCalendarDays from "../../utils/functions/SetCalendarDays";
 import UserBooking from "../../components/UserBooking/UserBooking";
 import ButtonBar from "../../components/ButtonBar/ButtonBar";
 import Button from "../../components/Button/Button";
-import AddEvent from "../../components/AddEvent/AddEvent";
+import AddEvent from "../../modals/AddEvent/AddEvent";
 import NetworkAdapter from "../../api/NetworkAdapter";
 
 const Dashboard = (props) => {

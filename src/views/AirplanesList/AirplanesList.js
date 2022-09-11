@@ -3,10 +3,10 @@ import PageWrapper from "../../wrappers/PageWrapper/PageWrapper";
 import ButtonBar from "../../components/ButtonBar/ButtonBar";
 import Button from "../../components/Button/Button";
 import {useState} from "react";
-import AddAirplane from "../../components/AddAirplane/AddAirplane";
+import AddAirplane from "../../modals/AddAirplane/AddAirplane";
 import {GetAllAirplanes} from "../../redux/actions/GetAllAirplanes";
 import {connect} from "react-redux";
-import DeleteAirplane from "../../components/DeleteAirplane/DeleteAirplane";
+import DeleteAirplane from "../../modals/DeleteAirplane/DeleteAirplane";
 import {Link} from "react-router-dom";
 
 const AirplanesList = (props) => {

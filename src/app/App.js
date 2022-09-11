@@ -15,6 +15,12 @@ import PermissionCheck from "../utils/functions/PermissionCheck";
 import AirplanesList from "../views/AirplanesList/AirplanesList";
 import {GetAllAirplanes} from "../redux/actions/GetAllAirplanes";
 import ViewAirplane from "../views/ViewAirplane/ViewAirplane";
+import ToolList from "../views/ToolList/ToolList";
+import {GetAllTools} from "../redux/actions/GetAllTools";
+import ViewTool from "../views/ViewTool/ViewTool";
+import WorkOrderList from "../views/WorkOrderList/WorkOrderList";
+import {GetAllWorkOrders} from "../redux/actions/GetAllWorkOrders";
+import ViewWorkOrder from "../views/ViewWorkOrder/ViewWorkOrder";
 
 const App = (props) => {
 
@@ -34,6 +40,8 @@ const App = (props) => {
 
 	useEffect(() => {
 		props.GetAllAirplanes();
+		props.GetAllTools();
+		props.GetAllWorkOrders();
 		if (!props.UsersReducer.AuthedUser) {
 			console.log("Checking for stored user.")
 			const storedUser = localStorage.getItem('beacon_user');
@@ -57,6 +65,10 @@ const App = (props) => {
 							<Route path={'/'} exact component={Dashboard}/>
 							<Route path={'/airplanes'} exact component={AirplanesList}/>
 							<Route path={'/airplanes/:id'} exact component={ViewAirplane}/>
+							<Route path={'/tooling'} exact component={ToolList}/>
+							<Route path={'/tooling/:id'} exact component={ViewTool}/>
+							<Route path={'/work-orders'} exact component={WorkOrderList}/>
+							<Route path={'/work-orders/:id'} exact component={ViewWorkOrder}/>
 						</Switch>
 						: <Route path={'/'} exact component={LogIn}/>
 				}
@@ -78,7 +90,9 @@ const mapDispatchToProps = (dispatch) => {
 		GetUserFromIO: (id) => dispatch(GetUserFromIO(id)),
 		SetAuthedUser: (user) => dispatch(SetAuthedUser(user)),
 		ForceUserOut: () => dispatch(ForceUserOut()),
-		GetAllAirplanes: () => dispatch(GetAllAirplanes())
+		GetAllAirplanes: () => dispatch(GetAllAirplanes()),
+		GetAllTools: () => dispatch(GetAllTools()),
+		GetAllWorkOrders: () => dispatch(GetAllWorkOrders()),
 	};
 };
 
