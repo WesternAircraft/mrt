@@ -43,12 +43,12 @@ const UserBooking = (props) => {
 	>
 		<div className={[LeftFlag > 0 ? styles.show : '', styles.leftFlag].join(' ')}>{'+' + LeftFlag}</div>
 		<div className={styles.dates}>
-			<div>{props.event.start_date}</div>
+			<div>{moment(props.event.start_date).format("MM-DD-YYYY")}</div>
 			<div className={styles.arrow}>
 				<div className={styles.line}/>
 				<i className="fa-solid fa-caret-right"/>
 			</div>
-			<div>{props.event.end_date}</div>
+			<div>{moment(props.event.end_date).format("MM-DD-YYYY")}</div>
 		</div>
 		<div className={styles.information}>
 			<div className={styles.city}>
