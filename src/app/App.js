@@ -18,6 +18,7 @@ import ViewAirplane from "../views/ViewAirplane/ViewAirplane";
 import ToolList from "../views/ToolList/ToolList";
 import {GetAllTools} from "../redux/actions/GetAllTools";
 import ViewEvent from "../views/ViewEvent/ViewEvent";
+import {GetAllToolRequests} from "../redux/actions/GetAllToolRequests";
 
 const App = (props) => {
 
@@ -38,6 +39,7 @@ const App = (props) => {
 	useEffect(() => {
 		props.GetAllAirplanes();
 		props.GetAllTools();
+		props.GetAllToolRequests();
 		if (!props.UsersReducer.AuthedUser) {
 			console.log("Checking for stored user.")
 			const storedUser = localStorage.getItem('beacon_user');
@@ -86,6 +88,7 @@ const mapDispatchToProps = (dispatch) => {
 		ForceUserOut: () => dispatch(ForceUserOut()),
 		GetAllAirplanes: () => dispatch(GetAllAirplanes()),
 		GetAllTools: () => dispatch(GetAllTools()),
+		GetAllToolRequests: () => dispatch(GetAllToolRequests())
 	};
 };
 

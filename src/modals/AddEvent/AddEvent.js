@@ -18,7 +18,7 @@ const AddEvent = (props) => {
 		end_date: "",
 		city: "",
 		airplane: null,
-		work_order: null
+		work_order: ""
 	}
 
 	const [Form, SetForm] = useState({...FormTemplate});
@@ -115,6 +115,11 @@ const AddEvent = (props) => {
 				</div>
 				<div className={styles.section}>
 					<div className={styles.label}>Work Order</div>
+					<input
+						type="text"
+						onChange={(e) => SetForm({...Form, work_order: e.target.value})}
+						value={Form.work_order}
+					/>
 				</div>
 			</div>
 			<ButtonBar position={'right'}>

@@ -76,7 +76,11 @@ const UserBooking = (props) => {
 				</div>
 			</div>
 			<div className={styles.icons}>
-				<i className={[styles.alert, " fa-solid fa-triangle-exclamation"].join(' ')}/>
+				{
+					props.event.alert
+						? <i className={[styles.alert, " fa-solid fa-triangle-exclamation"].join(' ')}/>
+						: <i className={["fa-solid fa-triangle-exclamation"].join(' ')}/>
+				}
 				<Link to={'/' + props.event._id}>
 					<i className="fa-solid fa-pen-to-square"/>
 				</Link>

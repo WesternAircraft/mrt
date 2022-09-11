@@ -7,6 +7,9 @@ import ChangeTechnician from "../../modals/ChangeTechnician/ChangeTechnician";
 import ChangeAirplane from "../../modals/ChangeAirplane/ChangeAirplane";
 import ChangeEvent from "../../modals/ChangeEvent/ChangeEvent";
 import {Link} from "react-router-dom";
+import AddToolRequest from "../../modals/AddToolRequest/AddToolRequest";
+import {GetAllToolRequests} from "../../redux/actions/GetAllToolRequests";
+import {connect} from "react-redux";
 
 const ViewEvent = (props) => {
 
@@ -16,6 +19,7 @@ const ViewEvent = (props) => {
 	const [ShowChangeTechnician, SetChangeTechnician] = useState(false);
 	const [ShowChangeAirplane, SetChangeAirplane] = useState(false);
 	const [ShowChangeEvent, SetChangeEvent] = useState(false);
+	const [ShowAddToolRequest, SetAddToolRequest] = useState(false);
 
 	const GetEvent = async () => {
 		const result = await NETWORK_ADAPTER.get('/MRT/get-event/' + props.match.params.id);
@@ -33,7 +37,6 @@ const ViewEvent = (props) => {
 			GetEvent();
 			return;
 		}
-		console.log(result);
 		console.log(result.message)
 	}
 
@@ -278,31 +281,6 @@ const ViewEvent = (props) => {
 								}
 							</div>
 						</div>
-						<div className={styles.information}>
-							<div className={styles.label}>Phone</div>
-							<div className={styles.num}>
-								{
-									Event.airplane && Event.airplane.primary_contact_phone
-										? Event.airplane.primary_contact_phone
-										: '-'
-								}
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div className={styles.column}>
-				<div className={styles.section}>
-					<div className={styles.title}>
-						<div>WAI Standard Documents</div>
-					</div>
-					<div className={styles.list}>
-						<div className={styles.information}>
-							<div className={styles.label}>Incident Response Form</div>
-							<div className={styles.num}>
-								<i className="fa-regular fa-arrow-up-right-from-square"/>
-							</div>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -310,12 +288,53 @@ const ViewEvent = (props) => {
 				<div className={styles.section}>
 					<div className={styles.title}>
 						<div>Tool Requests</div>
-						<i className="fa-regular fa-plus"/>
-					</div>
-					<div className={styles.list}>
-
+						<i
+							className="fa-regular fa-plus"
+							onClick={() => SetAddToolRequest(true)}
+						/>
 					</div>
 				</div>
+				{
+					props.ToolRequestsReducer.ToolRequests.filter((req) => req.event === Event._id).map((request) => {
+						return <div className={styles.section}>
+							<div className={styles.title}>
+								<div>{request.tool.name}</div>
+							</div>
+							<div className={styles.list}>
+								<div className={styles.information}>
+									<div className={styles.label}>Inbound Tracking</div>
+									<div className={styles.num}>
+										{
+											request.inbound_tracking
+												? request.inbound_tracking
+												: '-'
+										}
+									</div>
+								</div>
+								<div className={styles.information}>
+									<div className={styles.label}>Outbound Tracking</div>
+									<div className={styles.num}>
+										{
+											request.outbound_tracking
+												? request.outbound_tracking
+												: '-'
+										}
+									</div>
+								</div>
+								<div className={styles.information}>
+									<div className={styles.label}>Status</div>
+									<div className={styles.num}>
+										{
+											request.status
+												? request.status
+												: '-'
+										}
+									</div>
+								</div>
+							</div>
+						</div>
+					})
+				}
 			</div>
 			<div className={styles.long}>
 				<div className={styles.section}>
@@ -335,6 +354,10 @@ const ViewEvent = (props) => {
 			SetChangeEvent(false);
 			GetEvent();
 		}}/>
+		<AddToolRequest event={Event} show={ShowAddToolRequest} handleClose={() => {
+			SetAddToolRequest(false);
+			props.GetAllToolRequests();
+		}}/>
 		{/*<EditToolWarranty tool={Tool} show={ShowEditToolWarranty} handleClose={() => {*/}
 		{/*	SetEditToolWarranty(false);*/}
 		{/*	GetTool();*/}
@@ -342,4 +365,16 @@ const ViewEvent = (props) => {
 	</PageWrapper>
 }
 
-export default ViewEvent;
+const mapStateToProps = (state) => {
+	return {
+		ToolRequestsReducer: state.ToolRequestsReducer
+	};
+};
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		GetAllToolRequests: () => dispatch(GetAllToolRequests())
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ViewEvent);
