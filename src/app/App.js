@@ -19,6 +19,7 @@ import ToolList from "../views/ToolList/ToolList";
 import {GetAllTools} from "../redux/actions/GetAllTools";
 import ViewEvent from "../views/ViewEvent/ViewEvent";
 import {GetAllToolRequests} from "../redux/actions/GetAllToolRequests";
+import DocumentList from "../views/DocumentList/DocumentList";
 
 const App = (props) => {
 
@@ -64,6 +65,7 @@ const App = (props) => {
 							<Route path={'/airplanes'} exact component={AirplanesList}/>
 							<Route path={'/airplanes/:id'} exact component={ViewAirplane}/>
 							<Route path={'/tooling'} exact component={ToolList}/>
+							<Route path={'/documents'} exact component={DocumentList}/>
 							<Route path={'/:id'} exact component={ViewEvent}/>
 						</Switch>
 						: <Route path={'/'} exact component={LogIn}/>

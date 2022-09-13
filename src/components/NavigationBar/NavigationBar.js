@@ -30,6 +30,9 @@ const NavigationBar = (props) => {
 			<Link to={'/airplanes'}>
 				<div className={styles.item}>Airplanes</div>
 			</Link>
+			<Link to={'/documents'}>
+				<div className={styles.item}>Documents</div>
+			</Link>
 			<Link to={'/tooling'}>
 				<div className={styles.item}>Tooling</div>
 			</Link>
