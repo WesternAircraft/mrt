@@ -106,8 +106,14 @@ const ViewEvent = (props) => {
 									{e.user.name} wrote:
 									<br/>
 									<br/>
-									{e.post}
-									<br/>
+									<div className={styles.row}>
+										<div className={styles.icon}>
+											<i className="fa-regular fa-messages"/>
+										</div>
+										<div>
+											{e.post}
+										</div>
+									</div>
 									<br/>
 								</div>
 								: null
@@ -115,10 +121,16 @@ const ViewEvent = (props) => {
 						{
 							e.file && e.file !== ""
 								? <div>
-									<a href={NETWORK_ADDRESS + "/uploads/mrt/" + e.file} target={"_blank"}>
-										{e.file}
-									</a>
-									<br/>
+									<div className={styles.row}>
+										<div className={styles.icon}>
+											<i className="fa-regular fa-files"/>
+										</div>
+										<div>
+											<a href={NETWORK_ADDRESS + "/uploads/mrt/" + e.file} target={"_blank"}>
+												{e.file}
+											</a>
+										</div>
+									</div>
 									<br/>
 								</div>
 								: null

@@ -104,7 +104,8 @@ const Dashboard = (props) => {
 			<div className={styles.users}>
 				{
 					Team.map((user, index) => {
-						return <div className={styles.user} key={index}>
+						return <div className={[index % 2 !== 0 ? styles.even : '', styles.user].join(' ')}
+						            key={index}>
 							<div className={styles.name}>{user.name}</div>
 							<div className={styles.events}>
 								{

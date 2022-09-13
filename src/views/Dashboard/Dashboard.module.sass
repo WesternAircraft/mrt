@@ -75,6 +75,7 @@
 		position: absolute
 		top: 0
 		left: 0
+		z-index: 10
 
 		.spacer
 			width: 12%
@@ -120,18 +121,22 @@
 		height: 100%
 		display: flex
 		flex-direction: column
-		z-index: 10
 
 		.user
 			padding: 10px 0
 			display: flex
 			flex-direction: row
 			margin-bottom: 10px
+			min-height: 100px
 
 			.name
 				width: 12.2%
+				padding: 10px
 
 			.events
 				width: 89%
 				display: flex
 				flex-direction: column
+
+		.even
+			background-color: lighten($dark, 5)
