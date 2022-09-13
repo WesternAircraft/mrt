@@ -20,7 +20,6 @@ const AddToolRequest = (props) => {
 	const [Errors, SetErrors] = useState("");
 
 	const SubmitForm = async () => {
-		console.log(Form)
 		if (!Form.tool) {
 			SetErrors("Tool is a required fields.");
 			return;

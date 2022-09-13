@@ -10,25 +10,37 @@ import {Link} from "react-router-dom";
 import AddToolRequest from "../../modals/AddToolRequest/AddToolRequest";
 import {GetAllToolRequests} from "../../redux/actions/GetAllToolRequests";
 import {connect} from "react-redux";
+import DeleteToolRequest from "../../modals/DeleteToolRequest/DeleteToolRequest";
+import EditToolRequest from "../../modals/EditToolRequest/EditToolRequest";
 
 const ViewEvent = (props) => {
 
 	const NETWORK_ADAPTER = new NetworkAdapter();
 
 	const [Event, SetEvent] = useState({});
+	const [WOEvents, SetWOEvents] = useState([]);
 	const [ShowChangeTechnician, SetChangeTechnician] = useState(false);
 	const [ShowChangeAirplane, SetChangeAirplane] = useState(false);
 	const [ShowChangeEvent, SetChangeEvent] = useState(false);
 	const [ShowAddToolRequest, SetAddToolRequest] = useState(false);
+	const [ShowDeleteToolRequest, SetDeleteToolRequest] = useState(null);
+	const [ShowEditToolRequest, SetEditToolRequest] = useState(null);
 
 	const GetEvent = async () => {
 		const result = await NETWORK_ADAPTER.get('/MRT/get-event/' + props.match.params.id);
 		if (result.code === 200) {
 			SetEvent({...result.payload});
-			console.log(result.payload)
 			return;
 		}
 		console.log(result.message)
+	}
+
+	const GetWOEvents = async () => {
+		const events = await NETWORK_ADAPTER.get('/MRT/get-all-work-order-events/' + props.match.params.id);
+		if (events.code === 200) {
+			console.log(events)
+			SetWOEvents([...events.payload])
+		}
 	}
 
 	const ToggleAlert = async () => {
@@ -40,9 +52,62 @@ const ViewEvent = (props) => {
 		console.log(result.message)
 	}
 
+	const GenerateEvent = (e) => {
+		switch (e.type) {
+			case "created_event":
+				return <div className={[styles.log, styles.created_event].join(' ')}>
+					<div className={styles.description}>
+						{e.user.name} created the event.
+					</div>
+					<div
+						className={styles.date}>{moment(e.createdAt).tz("America/Boise").format("MM-DD-YYYY hh:mmA")}</div>
+				</div>
+			case "updated_event":
+				return <div className={[styles.log, styles.updated_event].join(' ')}>
+					<div className={styles.description}>
+						{e.user.name} updated the event.
+					</div>
+					<div
+						className={styles.date}>{moment(e.createdAt).tz("America/Boise").format("MM-DD-YYYY hh:mmA")}</div>
+				</div>
+			case "created_tool_request":
+				return <div className={[styles.log, styles.created_tool_request].join(' ')}>
+					<div className={styles.description}>
+						{e.user.name} created a tool request.
+					</div>
+					<div
+						className={styles.date}>{moment(e.createdAt).tz("America/Boise").format("MM-DD-YYYY hh:mmA")}</div>
+				</div>
+			case "edited_tool_request":
+				return <div className={[styles.log, styles.edited_tool_request].join(' ')}>
+					<div className={styles.description}>
+						{e.user.name} edited a tool request.
+					</div>
+					<div
+						className={styles.date}>{moment(e.createdAt).tz("America/Boise").format("MM-DD-YYYY hh:mmA")}</div>
+				</div>
+			case "removed_tool_request":
+				return <div className={[styles.log, styles.removed_tool_request].join(' ')}>
+					<div className={styles.description}>
+						{e.user.name} removed a tool request.
+					</div>
+					<div
+						className={styles.date}>{moment(e.createdAt).tz("America/Boise").format("MM-DD-YYYY hh:mmA")}</div>
+				</div>
+			default:
+				return null
+		}
+	}
+
 	useEffect(() => {
 		GetEvent();
 	}, []);
+
+	useEffect(() => {
+		if (Event && Event._id) {
+			GetWOEvents();
+		}
+	}, [Event]);
 
 	return <PageWrapper>
 		<div className={styles.viewTool}>
@@ -299,6 +364,16 @@ const ViewEvent = (props) => {
 						return <div className={styles.section}>
 							<div className={styles.title}>
 								<div>{request.tool.name}</div>
+								<div className={styles.icons}>
+									<i
+										className="fa-regular fa-trash-can"
+										onClick={() => SetDeleteToolRequest(request._id)}
+									/>
+									<i
+										className="fa-regular fa-pen-to-square"
+										onClick={() => SetEditToolRequest(request)}
+									/>
+								</div>
 							</div>
 							<div className={styles.list}>
 								<div className={styles.information}>
@@ -338,24 +413,47 @@ const ViewEvent = (props) => {
 			</div>
 			<div className={styles.long}>
 				<div className={styles.section}>
-					ACTIONS
+					<div className={styles.title}>
+						<div>History</div>
+					</div>
+					<div className={styles.list}>
+						{
+							WOEvents.map((event) => {
+								return GenerateEvent(event)
+							})
+						}
+					</div>
 				</div>
 			</div>
 		</div>
 		<ChangeTechnician event={Event} show={ShowChangeTechnician} handleClose={() => {
 			SetChangeTechnician(false);
 			GetEvent();
+			GetWOEvents();
 		}}/>
 		<ChangeAirplane event={Event} show={ShowChangeAirplane} handleClose={() => {
 			SetChangeAirplane(false);
 			GetEvent();
+			GetWOEvents();
 		}}/>
 		<ChangeEvent event={Event} show={ShowChangeEvent} handleClose={() => {
 			SetChangeEvent(false);
 			GetEvent();
+			GetWOEvents();
 		}}/>
 		<AddToolRequest event={Event} show={ShowAddToolRequest} handleClose={() => {
 			SetAddToolRequest(false);
+			GetWOEvents();
+			props.GetAllToolRequests();
+		}}/>
+		<DeleteToolRequest show={ShowDeleteToolRequest} handleClose={() => {
+			SetDeleteToolRequest(null);
+			GetWOEvents();
+			props.GetAllToolRequests();
+		}}/>
+		<EditToolRequest show={ShowEditToolRequest} handleClose={() => {
+			SetEditToolRequest(null);
+			GetWOEvents();
 			props.GetAllToolRequests();
 		}}/>
 		{/*<EditToolWarranty tool={Tool} show={ShowEditToolWarranty} handleClose={() => {*/}

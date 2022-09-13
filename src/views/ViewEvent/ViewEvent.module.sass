@@ -29,6 +29,14 @@
 				justify-content: space-between
 				align-items: center
 
+				.icons
+					display: flex
+					flex-direction: row
+					justify-content: flex-end
+
+					i
+						margin-left: 10px
+
 				i
 					color: $light
 					font-size: 14px
@@ -41,6 +49,25 @@
 				display: flex
 				flex-direction: column
 				font-size: 12px
+
+				.log
+					width: 100%
+					display: flex
+					flex-direction: column
+					padding: 5px 0
+
+					.date
+						font-size: 10px
+
+				.created_event, .created_tool_request
+					border-top: 2px solid #52BE80
+
+				.updated_event, .edited_tool_request
+					border-top: 2px solid #417ebb
+
+				.removed_tool_request
+					border-top: 2px solid #EC7063
+
 
 				.blockButton
 					width: 100%
