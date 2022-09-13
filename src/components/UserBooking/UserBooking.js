@@ -70,7 +70,7 @@ const UserBooking = (props) => {
 				<div className={styles.tail}>
 					{
 						props.event.work_order
-							? props.event.work_order.number
+							? props.event.work_order
 							: '-'
 					}
 				</div>

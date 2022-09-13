@@ -55,26 +55,6 @@ const Dashboard = (props) => {
 					/>
 				</div>
 				<div className={styles.legend}>
-					<div className={styles.item}>
-						<i className={[styles.alert, " fa-solid fa-triangle-exclamation"].join(' ')}/>
-						<div>= Alert</div>
-					</div>
-					<div className={styles.item}>
-						<i className="fa-regular fa-plane"/>
-						<div>= Airplane information</div>
-					</div>
-					<div className={styles.item}>
-						<i className="fa-regular fa-folders"/>
-						<div>= Uploaded Files</div>
-					</div>
-					<div className={styles.item}>
-						<i className="fa-regular fa-receipt"/>
-						<div>= Work Order</div>
-					</div>
-					<div className={styles.item}>
-						<i className="fa-regular fa-wrench"/>
-						<div>= Tooling</div>
-					</div>
 				</div>
 				<div className={styles.addButton}>
 					<ButtonBar position={'right'}>

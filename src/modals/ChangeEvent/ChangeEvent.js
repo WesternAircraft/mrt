@@ -16,7 +16,8 @@ const ChangeEvent = (props) => {
 		start_date: props.event.start_date,
 		end_date: props.event.end_date,
 		type: props.event.type,
-		city: props.event.city
+		city: props.event.city,
+		work_order: props.event.work_order
 	}
 
 	const [Form, SetForm] = useState({...FormTemplate});
@@ -78,13 +79,23 @@ const ChangeEvent = (props) => {
 					/>
 				</div>
 			</div>
-			<div className={styles.section}>
-				<div className={styles.label}>City</div>
-				<input
-					type="text"
-					onChange={(e) => SetForm({...Form, city: e.target.value})}
-					value={Form.city}
-				/>
+			<div className={styles.row}>
+				<div className={styles.section}>
+					<div className={styles.label}>City</div>
+					<input
+						type="text"
+						onChange={(e) => SetForm({...Form, city: e.target.value})}
+						value={Form.city}
+					/>
+				</div>
+				<div className={styles.section}>
+					<div className={styles.label}>Work Order</div>
+					<input
+						type="text"
+						onChange={(e) => SetForm({...Form, work_order: e.target.value})}
+						value={Form.work_order}
+					/>
+				</div>
 			</div>
 			<ButtonBar position={'right'}>
 				<Button color={'#EC7063'} handleClick={props.handleClose}>Cancel</Button>

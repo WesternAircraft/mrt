@@ -4,7 +4,6 @@ import ButtonBar from "../../components/ButtonBar/ButtonBar";
 import Button from "../../components/Button/Button";
 import {useState} from "react";
 import {connect} from "react-redux";
-import {Link} from "react-router-dom";
 import AddTool from "../../modals/AddTool/AddTool";
 import {GetAllTools} from "../../redux/actions/GetAllTools";
 import DeleteTool from "../../modals/DeleteTool/DeleteTool";
@@ -43,9 +42,9 @@ const ToolList = (props) => {
 									className={[styles.trash, " fa-solid fa-trash-can"].join(' ')}
 									onClick={() => SetDeleteTool(tool._id)}
 								/>
-								<Link to={'/tooling/' + tool._id}>
-									<i className="fa-regular fa-pen-to-square"/>
-								</Link>
+								{/*<Link to={'/tooling/' + tool._id}>*/}
+								{/*	<i className="fa-regular fa-pen-to-square"/>*/}
+								{/*</Link>*/}
 							</div>
 						</div>
 					})

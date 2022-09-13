@@ -12,6 +12,8 @@ import {GetAllToolRequests} from "../../redux/actions/GetAllToolRequests";
 import {connect} from "react-redux";
 import DeleteToolRequest from "../../modals/DeleteToolRequest/DeleteToolRequest";
 import EditToolRequest from "../../modals/EditToolRequest/EditToolRequest";
+import AddPost from "../../modals/AddPost/AddPost";
+import {NETWORK_ADDRESS} from "../../config/Network";
 
 const ViewEvent = (props) => {
 
@@ -25,6 +27,7 @@ const ViewEvent = (props) => {
 	const [ShowAddToolRequest, SetAddToolRequest] = useState(false);
 	const [ShowDeleteToolRequest, SetDeleteToolRequest] = useState(null);
 	const [ShowEditToolRequest, SetEditToolRequest] = useState(null);
+	const [ShowAddPost, SetAddPost] = useState(false);
 
 	const GetEvent = async () => {
 		const result = await NETWORK_ADAPTER.get('/MRT/get-event/' + props.match.params.id);
@@ -90,6 +93,36 @@ const ViewEvent = (props) => {
 				return <div className={[styles.log, styles.removed_tool_request].join(' ')}>
 					<div className={styles.description}>
 						{e.user.name} removed a tool request.
+					</div>
+					<div
+						className={styles.date}>{moment(e.createdAt).tz("America/Boise").format("MM-DD-YYYY hh:mmA")}</div>
+				</div>
+			case "user_post":
+				return <div className={[styles.log, styles.user_post].join(' ')}>
+					<div className={styles.description}>
+						{
+							e.post && e.post !== ""
+								? <div>
+									{e.user.name} wrote:
+									<br/>
+									<br/>
+									{e.post}
+									<br/>
+									<br/>
+								</div>
+								: null
+						}
+						{
+							e.file && e.file !== ""
+								? <div>
+									<a href={NETWORK_ADDRESS + "/uploads/mrt/" + e.file} target={"_blank"}>
+										{e.file}
+									</a>
+									<br/>
+									<br/>
+								</div>
+								: null
+						}
 					</div>
 					<div
 						className={styles.date}>{moment(e.createdAt).tz("America/Boise").format("MM-DD-YYYY hh:mmA")}</div>
@@ -177,6 +210,16 @@ const ViewEvent = (props) => {
 								{
 									Event.createdAt
 										? moment(Event.createdAt).format("YYYY-MM-DD")
+										: '-'
+								}
+							</div>
+						</div>
+						<div className={styles.information}>
+							<div className={styles.label}>Work Order Number</div>
+							<div className={styles.num}>
+								{
+									Event.work_order
+										? Event.work_order
 										: '-'
 								}
 							</div>
@@ -414,7 +457,11 @@ const ViewEvent = (props) => {
 			<div className={styles.long}>
 				<div className={styles.section}>
 					<div className={styles.title}>
-						<div>History</div>
+						<div>Work Order Timeline</div>
+						<i
+							className="fa-regular fa-plus"
+							onClick={() => SetAddPost(true)}
+						/>
 					</div>
 					<div className={styles.list}>
 						{
@@ -455,6 +502,11 @@ const ViewEvent = (props) => {
 			SetEditToolRequest(null);
 			GetWOEvents();
 			props.GetAllToolRequests();
+		}}/>
+		<AddPost event={Event} show={ShowAddPost} handleClose={() => {
+			SetAddPost(false);
+			GetEvent();
+			GetWOEvents();
 		}}/>
 		{/*<EditToolWarranty tool={Tool} show={ShowEditToolWarranty} handleClose={() => {*/}
 		{/*	SetEditToolWarranty(false);*/}
