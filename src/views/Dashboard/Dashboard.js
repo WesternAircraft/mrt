@@ -8,15 +8,22 @@ import ButtonBar from "../../components/ButtonBar/ButtonBar";
 import Button from "../../components/Button/Button";
 import AddEvent from "../../modals/AddEvent/AddEvent";
 import NetworkAdapter from "../../api/NetworkAdapter";
+import UserTimeOff from "../../components/UserTimeOff/UserTimeOff";
+import DeleteEvent from "../../modals/DeleteEvent/DeleteEvent";
+import TeamA from "../../data/TeamA";
+import TeamB from "../../data/TeamB";
 
 const Dashboard = (props) => {
 
 	const NETWORK_ADAPTER = new NetworkAdapter();
 
 	const [CalendarDays, SetCalendarDays] = useState([]);
+	const [Team, SetTeam] = useState(TeamA);
+	const [Month, SetMonth] = useState("");
 	const [ViewAdd, SetViewAdd] = useState(false);
 	const [StartDate, SetStartDate] = useState(moment().tz("America/Boise").format("MM-DD-YYYY"));
 	const [Events, SetEvents] = useState([]);
+	const [ShowDeleteEvent, SetDeleteEvent] = useState("");
 
 	const GetEvents = async () => {
 		const results = await NETWORK_ADAPTER.get('/MRT/get-all-events/' + moment(StartDate).format("YYYY-MM-DD"));
@@ -33,11 +40,11 @@ const Dashboard = (props) => {
 		} else {
 			SetStartDate(moment(StartDate).tz("America/Boise").subtract(days * -1, 'days').format("MM-DD-YYYY"));
 		}
-
 	}
 
 	useEffect(() => {
 		SetCalendarDays(GenerateCalendarDays(moment(StartDate), 14));
+		SetMonth(moment(StartDate).tz("America/Boise").format("MMMM YYYY"));
 		GetEvents();
 	}, [StartDate]);
 
@@ -49,12 +56,25 @@ const Dashboard = (props) => {
 						className="fa-solid fa-angles-left"
 						onClick={() => ChangeStartDate(-14)}
 					/>
+					<div className={styles.month}>{Month}</div>
 					<i
 						className="fa-solid fa-angles-right"
 						onClick={() => ChangeStartDate(14)}
 					/>
 				</div>
-				<div className={styles.legend}>
+				<div className={styles.teams}>
+					<div
+						className={[Team[0].id === TeamA[0].id ? styles.highlight : '', styles.team].join(' ')}
+						onClick={() => SetTeam([...TeamA])}
+					>
+						Team A
+					</div>
+					<div
+						className={[Team[0].id === TeamB[0].id ? styles.highlight : '', styles.team].join(' ')}
+						onClick={() => SetTeam([...TeamB])}
+					>
+						Team B
+					</div>
 				</div>
 				<div className={styles.addButton}>
 					<ButtonBar position={'right'}>
@@ -83,18 +103,27 @@ const Dashboard = (props) => {
 			</div>
 			<div className={styles.users}>
 				{
-					['', ''].map((user, index) => {
+					Team.map((user, index) => {
 						return <div className={styles.user} key={index}>
-							<div className={styles.name}>Geoff Schaller</div>
+							<div className={styles.name}>{user.name}</div>
 							<div className={styles.events}>
 								{
-									Events.map((event, index) => {
-										return <UserBooking
-											index={index}
-											key={index}
-											event={event}
-											startDate={StartDate}
-										/>
+									Events.filter((e) => e.technician === user.id).map((event, index) => {
+										return event.type === 'booking'
+											? <UserBooking
+												index={index}
+												key={index}
+												event={event}
+												startDate={StartDate}
+												delete={() => SetDeleteEvent(event._id)}
+											/>
+											: <UserTimeOff
+												index={index}
+												key={index}
+												event={event}
+												startDate={StartDate}
+												delete={() => SetDeleteEvent(event._id)}
+											/>
 									})
 								}
 
@@ -107,6 +136,10 @@ const Dashboard = (props) => {
 		<AddEvent show={ViewAdd} handleClose={() => {
 			GetEvents();
 			SetViewAdd(false)
+		}}/>
+		<DeleteEvent show={ShowDeleteEvent} handleClose={() => {
+			GetEvents();
+			SetDeleteEvent("")
 		}}/>
 	</PageWrapper>
 }

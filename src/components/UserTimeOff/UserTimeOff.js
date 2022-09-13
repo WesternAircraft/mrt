@@ -1,10 +1,10 @@
-import styles from './UserBooking.module.sass';
+import styles from './UserTimeOff.module.sass';
 import PropTypes from "prop-types";
 import {useEffect, useState} from "react";
 import moment from "moment-timezone";
 import {Link} from "react-router-dom";
 
-const UserBooking = (props) => {
+const UserTimeOff = (props) => {
 
 	const [Offset, SetOffset] = useState(0);
 	const [Width, SetWidth] = useState(4);
@@ -52,39 +52,13 @@ const UserBooking = (props) => {
 			<div>{moment(props.event.end_date).format("MM-DD-YYYY")}</div>
 		</div>
 		<div className={styles.information}>
-			<div className={styles.city}>
-				<div className={styles.info}>
-					{
-						props.event.city
-							? props.event.city
-							: 'No City Listed'
-					}
-				</div>
-				<div className={styles.tail}>
-					{
-						props.event.airplane
-							? props.event.airplane.tail_number
-							: '-'
-					}
-				</div>
-				<div className={styles.tail}>
-					{
-						props.event.work_order
-							? props.event.work_order
-							: '-'
-					}
-				</div>
+			<div className={styles.timeOff}>
+				Time off request
 			</div>
 			<div className={styles.icons}>
-				{
-					props.event.alert
-						? <i className={[styles.alert, " fa-solid fa-triangle-exclamation"].join(' ')}/>
-						: <i className={["fa-solid fa-triangle-exclamation"].join(' ')}/>
-				}
 				<Link to={'/' + props.event._id}>
 					<i className="fa-solid fa-pen-to-square"/>
 				</Link>
-
 				<i
 					className={[styles.trash, " fa-regular fa-trash-can"].join(' ')}
 					onClick={props.delete}
@@ -95,10 +69,10 @@ const UserBooking = (props) => {
 	</div>
 }
 
-UserBooking.propTypes = {
+UserTimeOff.propTypes = {
 	index: PropTypes.number.isRequired,
 	event: PropTypes.object.isRequired,
-	delete: PropTypes.func.isRequired
+	delete: PropTypes.func.isRequired,
 }
 
-export default UserBooking;
+export default UserTimeOff;
