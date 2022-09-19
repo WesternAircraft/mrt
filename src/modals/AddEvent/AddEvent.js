@@ -19,7 +19,7 @@ const AddEvent = (props) => {
 		start_date: "",
 		end_date: "",
 		city: "",
-		airplane: null,
+		airplane: "",
 		work_order: ""
 	}
 
@@ -31,6 +31,9 @@ const AddEvent = (props) => {
 		if (!Form.technician || !Form.start_date || !Form.end_date || !Form.type) {
 			SetErrors("Technician, Start Date, End Date, and Event Type are all required fields.");
 			return;
+		}
+		if(Form.airplane === "") {
+			Form.airplane = null;
 		}
 		const result = await NETWORK_ADAPTER.post('/MRT/add-user-event', {
 			...Form,
@@ -44,10 +47,8 @@ const AddEvent = (props) => {
 	}
 
 	useEffect(() => {
-		if (props.show) {
-			SetForm({...FormTemplate});
-			SetErrors("");
-		}
+		SetErrors("");
+		SetForm({...FormTemplate});
 	}, [props.show]);
 
 	return <Modal show={props.show} handleClose={props.handleClose}>

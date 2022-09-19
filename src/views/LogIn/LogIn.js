@@ -21,7 +21,7 @@ const LogIn = (props) => {
 		if (authResult) {
 			const result = await props.GetUserFromIO(authResult.id);
 			if (result.code === 200) {
-				if (PermissionCheck(result.payload.permissions, ['MRT_FULL_ADMIN'])) {
+				if (PermissionCheck(result.payload.permissions, ['MRT_FULL_ADMIN', "MRT_READ_ONLY"])) {
 					console.log("Authorized!!!!!")
 					localStorage.setItem('beacon_user', result.payload._id);
 					props.SetAuthedUser({...result.payload})

@@ -82,7 +82,7 @@ const EditToolRequest = (props) => {
 			</div>
 			<ButtonBar position={'right'}>
 				<Button color={'#EC7063'} handleClick={props.handleClose}>Cancel</Button>
-				<Button color={'#7DCEA0'} handleClick={() => SubmitForm()}>Update Airframe</Button>
+				<Button color={'#7DCEA0'} handleClick={() => SubmitForm()}>Update Tool Request</Button>
 			</ButtonBar>
 			<div className={styles.errors}>{Errors}</div>
 		</div>

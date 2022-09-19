@@ -6,6 +6,8 @@ import Button from "../../components/Button/Button";
 import {useEffect, useState} from "react";
 import NetworkAdapter from "../../api/NetworkAdapter";
 import {connect} from "react-redux";
+import TeamA from '../../data/TeamA';
+import TeamB from '../../data/TeamB';
 
 const ChangeTechnician = (props) => {
 
@@ -53,7 +55,11 @@ const ChangeTechnician = (props) => {
 					value={Form.technician}
 				>
 					<option value="">-- Select Technician --</option>
-					<option value="622e348b275887aa785538eb">Geoff Schaller</option>
+					{
+						[...TeamA, ...TeamB].map((tech) => {
+							return <option value={tech.id}>{tech.name}</option>
+						})
+					}
 				</select>
 			</div>
 			<ButtonBar position={'right'}>

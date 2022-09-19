@@ -26,7 +26,8 @@ const App = (props) => {
 	const GetUser = async (id) => {
 		const result = await props.GetUserFromIO(id);
 		if (result.code === 200) {
-			if (PermissionCheck(result.payload.permissions, ['MRT_FULL_ADMIN'])) {
+			console.log(result);
+			if (PermissionCheck(result.payload.permissions, ['MRT_FULL_ADMIN', 'MRT_READ_ONLY'])) {
 				console.log("FULL ADMIN!")
 				props.SetAuthedUser({...result.payload})
 			} else {
