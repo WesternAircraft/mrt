@@ -59,6 +59,7 @@ const ChangeEvent = (props) => {
 					<option value="">-- Select Event Type --</option>
 					<option value="booking">Technician Booking</option>
 					<option value="time_off">Time Off</option>
+					<option value="vacation">Vacation</option>
 				</select>
 			</div>
 			<div className={styles.row}>

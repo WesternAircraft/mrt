@@ -1,10 +1,10 @@
-import styles from './UserTimeOff.module.sass';
+import styles from './UserVacation.module.sass';
 import PropTypes from "prop-types";
 import {useEffect, useState} from "react";
 import moment from "moment-timezone";
 import {Link} from "react-router-dom";
 
-const UserTimeOff = (props) => {
+const UserVacation = (props) => {
 
 	const [Offset, SetOffset] = useState(0);
 	const [Width, SetWidth] = useState(4);
@@ -53,7 +53,7 @@ const UserTimeOff = (props) => {
 		</div>
 		<div className={styles.information}>
 			<div className={styles.timeOff}>
-				Time off
+				Vacation
 			</div>
 			<div className={styles.icons}>
 				<Link to={'/' + props.event._id}>
@@ -69,10 +69,10 @@ const UserTimeOff = (props) => {
 	</div>
 }
 
-UserTimeOff.propTypes = {
+UserVacation.propTypes = {
 	index: PropTypes.number.isRequired,
 	event: PropTypes.object.isRequired,
 	delete: PropTypes.func.isRequired,
 }
 
-export default UserTimeOff;
+export default UserVacation;
