@@ -54,8 +54,8 @@ const ChangeAirplane = (props) => {
 				>
 					<option value="">-- Select Airplane --</option>
 					{
-						props.AirplanesReducer.Airplanes.map((airplane) => {
-							return <option value={airplane._id}>{airplane.tail_number}</option>
+						props.AirplanesReducer.Airplanes.map((airplane, index) => {
+							return <option value={airplane._id} key={index}>{airplane.tail_number}</option>
 						})
 					}
 

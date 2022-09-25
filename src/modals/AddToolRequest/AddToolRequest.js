@@ -53,8 +53,8 @@ const AddToolRequest = (props) => {
 				>
 					<option value="">-- Select Tool --</option>
 					{
-						props.ToolsReducer.Tools.map((tool) => { 
-							return <option value={tool._id}>{tool.name} {tool.description ? ' - ' + tool.description : ''}</option>
+						props.ToolsReducer.Tools.map((tool, index) => { 
+							return <option value={tool._id} key={index}>{tool.name} {tool.description ? ' - ' + tool.description : ''}</option>
 						})
 					}
 				</select>

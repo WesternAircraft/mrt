@@ -8,10 +8,7 @@ import LogIn from "../views/LogIn/LogIn";
 import {GetUserFromIO} from "../redux/actions/GetUserFromIO";
 import {SetAuthedUser} from "../redux/actions/SetAuthedUser";
 import Dashboard from "../views/Dashboard/Dashboard";
-import Unauthorized from "../views/Unauthorized/Unauthorized";
-import {LOCAL_ADDRESS} from "../config/Network";
 import {ForceUserOut} from "../redux/actions/ForceUserOut";
-import PermissionCheck from "../utils/functions/PermissionCheck";
 import AirplanesList from "../views/AirplanesList/AirplanesList";
 import {GetAllAirplanes} from "../redux/actions/GetAllAirplanes";
 import ViewAirplane from "../views/ViewAirplane/ViewAirplane";
@@ -26,32 +23,26 @@ const App = (props) => {
 	const GetUser = async (id) => {
 		const result = await props.GetUserFromIO(id);
 		if (result.code === 200) {
-			console.log(result);
-			if (PermissionCheck(result.payload.permissions, ['MRT_FULL_ADMIN', 'MRT_READ_ONLY'])) {
-				console.log("FULL ADMIN!")
-				props.SetAuthedUser({...result.payload})
-			} else {
-				window.location = LOCAL_ADDRESS + '/unauthorized';
-				props.ForceUserOut();
-				console.log("UN-AUTHORIZED!!!!!")
-			}
+			props.GetAllAirplanes();
+			props.GetAllTools();
+			props.GetAllToolRequests();
+			props.SetAuthedUser({...result.payload})
 		}
 	}
 
 	useEffect(() => {
-		props.GetAllAirplanes();
-		props.GetAllTools();
-		props.GetAllToolRequests();
-		if (!props.UsersReducer.AuthedUser) {
+		const run = async () => {
 			console.log("Checking for stored user.")
-			const storedUser = localStorage.getItem('beacon_user');
+			const storedUser = localStorage.getItem('io_auth_token');
 			if (!storedUser) {
-				props.ForceUserOut();
 				console.log("No stored user found.");
 			} else {
 				console.log("Found stored user.")
 				GetUser(storedUser);
 			}
+		}
+		if (!props.UsersReducer.AuthedUser) {
+			run();
 		}
 	}, []);
 
@@ -60,7 +51,7 @@ const App = (props) => {
 			<div className={styles.app}>
 				<div><Toaster/></div>
 				{
-					props.UsersReducer.AuthedUser && props.UsersReducer.AuthedUser.azureId
+					props.UsersReducer.AuthedUser
 						? <Switch>
 							<Route path={'/'} exact component={Dashboard}/>
 							<Route path={'/airplanes'} exact component={AirplanesList}/>
@@ -71,8 +62,6 @@ const App = (props) => {
 						</Switch>
 						: <Route path={'/'} exact component={LogIn}/>
 				}
-				<Route path={'/unauthorized'} exact component={Unauthorized}/>
-				<Route path={'/logged-out'} exact component={LogIn}/>
 			</div>
 		</HashRouter>
 	);

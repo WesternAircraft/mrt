@@ -56,8 +56,8 @@ const ChangeTechnician = (props) => {
 				>
 					<option value="">-- Select Technician --</option>
 					{
-						[...TeamA, ...TeamB].map((tech) => {
-							return <option value={tech.id}>{tech.name}</option>
+						[...TeamA, ...TeamB].map((tech, index) => {
+							return <option value={tech.id} key={index}>{tech.name}</option>
 						})
 					}
 				</select>

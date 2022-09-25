@@ -27,7 +27,6 @@ const AddEvent = (props) => {
 	const [Errors, SetErrors] = useState("");
 
 	const SubmitForm = async () => {
-		console.log(Form)
 		if (!Form.technician || !Form.start_date || !Form.end_date || !Form.type) {
 			SetErrors("Technician, Start Date, End Date, and Event Type are all required fields.");
 			return;
@@ -62,8 +61,8 @@ const AddEvent = (props) => {
 				>
 					<option value="">-- Select Technician --</option>
 					{
-						[...TeamA, ...TeamB].map((tech) => {
-							return <option value={tech.id}>{tech.name}</option>
+						[...TeamA, ...TeamB].map((tech, index) => {
+							return <option value={tech.id} key={index}>{tech.name}</option>
 						})
 					}
 				</select>
@@ -115,8 +114,8 @@ const AddEvent = (props) => {
 					>
 						<option value="">-- Select Airplane --</option>
 						{
-							props.AirplanesReducer.Airplanes.map((airplane) => {
-								return <option value={airplane._id}>{airplane.tail_number}</option>
+							props.AirplanesReducer.Airplanes.map((airplane, index) => {
+								return <option value={airplane._id} key={index}>{airplane.tail_number}</option>
 							})
 						}
 					</select>

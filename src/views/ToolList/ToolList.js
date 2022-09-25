@@ -27,7 +27,7 @@ const ToolList = (props) => {
 				</div>
 				{
 					props.ToolsReducer.Tools.map((tool, index) => {
-						return <div className={styles.item}>
+						return <div className={styles.item} key={index}>
 							<div className={styles.small}>#{index + 1}</div>
 							<div className={styles.long}>{tool.name}</div>
 							<div className={styles.extra}>

@@ -20,19 +20,39 @@
 			color: #fca311
 			font-size: 60px
 			margin-bottom: 20px
+			text-shadow: 5px 5px 2px rgba(0,0,0,0.61)
 
 		.title
 			font-size: 20px
 			margin-bottom: 10px
 			font-weight: bold
+			text-transform: uppercase
 
 		.description
 			margin-bottom: 20px
 			font-size: 14px
 			color: #D5D8DC
+			font-family: $font-title
 
-	.error
-		color: #EC7063
-		font-weight: bold
-		text-transform: uppercase
-		margin-top: 10px
+		.section
+			flex: 1
+			margin-bottom: 10px
+			margin-right: 10px
+
+			.label
+				margin-bottom: 3px
+				font-size: 12px
+				text-transform: uppercase
+				font-weight: bold
+				font-family: $font-title
+				text-align: left
+
+				.required
+					color: #EC7063
+
+		.errors
+			min-height: 50px
+			color: #EC7063
+			font-weight: bold
+			text-transform: uppercase
+			margin-top: 10px

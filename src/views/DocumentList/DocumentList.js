@@ -42,7 +42,7 @@ const DocumentList = (props) => {
 				</div>
 				{
 					Documents.map((doc, index) => {
-						return <div className={styles.item}>
+						return <div className={styles.item} key={index}>
 							<div className={styles.small}>#{index + 1}</div>
 							<div className={styles.long}>{doc.name}</div>
 							<div className={styles.extra}>

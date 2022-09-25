@@ -49,10 +49,6 @@ const Dashboard = (props) => {
 		GetEvents();
 	}, [StartDate]);
 
-	useEffect(() => {
-		console.log(Team)
-	}, [Team])
-
 	return <PageWrapper>
 		<div className={styles.dashboard}>
 			<div className={styles.topMenu}>

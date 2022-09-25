@@ -32,7 +32,7 @@ const AirplanesList = (props) => {
 				</div>
 				{
 					props.AirplanesReducer.Airplanes.map((airplane, index) => {
-						return <div className={styles.item}>
+						return <div className={styles.item} key={index}>
 							<div className={styles.small}>#{index + 1}</div>
 							<div className={styles.long}>{airplane.tail_number}</div>
 							<div className={styles.long}>{airplane.serial_number}</div>
