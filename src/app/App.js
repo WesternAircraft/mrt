@@ -4,8 +4,6 @@ import {connect} from "react-redux";
 import {Switch} from "react-router";
 import {HashRouter, Route} from "react-router-dom";
 import {Toaster} from "react-hot-toast";
-import LogIn from "../views/LogIn/LogIn";
-import {GetUserFromIO} from "../redux/actions/GetUserFromIO";
 import {SetAuthedUser} from "../redux/actions/SetAuthedUser";
 import Dashboard from "../views/Dashboard/Dashboard";
 import {ForceUserOut} from "../redux/actions/ForceUserOut";
@@ -19,6 +17,7 @@ import {GetAllToolRequests} from "../redux/actions/GetAllToolRequests";
 import DocumentList from "../views/DocumentList/DocumentList";
 import CodeLogin from "../views/CodeLogin/CodeLogin";
 import {ValidateUserToken} from "../redux/actions/ValidateUserToken";
+import {GetTeamMembers} from "../redux/actions/GetTeamMembers";
 
 const App = (props) => {
 
@@ -28,7 +27,8 @@ const App = (props) => {
 			props.GetAllAirplanes();
 			props.GetAllTools();
 			props.GetAllToolRequests();
-			props.SetAuthedUser({...result.payload})
+			props.SetAuthedUser({...result.payload});
+			props.GetTeamMembers();
 		}
 	}
 
@@ -77,13 +77,13 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		GetUserFromIO: (id) => dispatch(GetUserFromIO(id)),
 		SetAuthedUser: (user) => dispatch(SetAuthedUser(user)),
 		ForceUserOut: () => dispatch(ForceUserOut()),
 		GetAllAirplanes: () => dispatch(GetAllAirplanes()),
 		GetAllTools: () => dispatch(GetAllTools()),
 		GetAllToolRequests: () => dispatch(GetAllToolRequests()),
-		ValidateUserToken: (token) => dispatch(ValidateUserToken(token))
+		ValidateUserToken: (token) => dispatch(ValidateUserToken(token)),
+		GetTeamMembers: () => dispatch(GetTeamMembers())
 	};
 };
 

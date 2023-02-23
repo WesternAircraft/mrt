@@ -13,13 +13,15 @@ import DeleteEvent from "../../modals/DeleteEvent/DeleteEvent";
 import TeamA from "../../data/TeamA";
 import TeamB from "../../data/TeamB";
 import UserVacation from '../../components/UserVacation/UserVacation';
+import {connect} from "react-redux";
 
 const Dashboard = (props) => {
 
 	const NETWORK_ADAPTER = new NetworkAdapter();
 
 	const [CalendarDays, SetCalendarDays] = useState([]);
-	const [Team, SetTeam] = useState([...TeamA]);
+	const [Team, SetTeam] = useState([]);
+	const [TeamLabel, SetTeamLabel] = useState("")
 	const [Month, SetMonth] = useState("");
 	const [ViewAdd, SetViewAdd] = useState(false);
 	const [StartDate, SetStartDate] = useState(moment().tz("America/Boise").format("MM-DD-YYYY"));
@@ -35,6 +37,18 @@ const Dashboard = (props) => {
 		console.log("Error: " + results.message)
 	}
 
+	const HandleTeamChange = (team) => {
+		if (team === "combined") {
+			SetTeam([
+				...props.UsersReducer.TeamMembers.filter((mem) => mem.team && mem.team === "a"),
+				...props.UsersReducer.TeamMembers.filter((mem) => mem.team && mem.team === "b"),
+			]);
+		} else {
+			SetTeam([...props.UsersReducer.TeamMembers.filter((mem) => mem.team && mem.team === team)]);
+		}
+		SetTeamLabel(team);
+	}
+
 	const ChangeStartDate = (days) => {
 		if (days >= 0) {
 			SetStartDate(moment(StartDate).tz("America/Boise").add(days, 'days').format("MM-DD-YYYY"));
@@ -42,6 +56,11 @@ const Dashboard = (props) => {
 			SetStartDate(moment(StartDate).tz("America/Boise").subtract(days * -1, 'days').format("MM-DD-YYYY"));
 		}
 	}
+
+	useEffect(() => {
+		SetTeam(props.UsersReducer.TeamMembers.filter((mem) => mem.team && mem.team === "a"));
+		SetTeamLabel("a");
+	}, [props.UsersReducer.TeamMembers])
 
 	useEffect(() => {
 		SetCalendarDays(GenerateCalendarDays(moment(StartDate), 14));
@@ -65,22 +84,20 @@ const Dashboard = (props) => {
 				</div>
 				<div className={styles.teams}>
 					<div
-						className={[Team[0].id === TeamA[0].id && Team.length !== TeamB.length + TeamA.length ? styles.highlight : '', styles.team].join(' ')}
-						onClick={() => SetTeam([...TeamA])}
+						className={[TeamLabel === "a" ? styles.highlight : null, styles.team].join(' ')}
+						onClick={() => HandleTeamChange("a")}
 					>
 						Team A
 					</div>
 					<div
-						className={[Team[0].id === TeamB[0].id && Team.length !== TeamB.length + TeamA.length? styles.highlight : '', styles.team].join(' ')}
-						onClick={() => SetTeam([...TeamB])}
+						className={[TeamLabel === "b" ? styles.highlight : null, styles.team].join(' ')}
+						onClick={() => HandleTeamChange("b")}
 					>
 						Team B
 					</div>
 					<div
-						className={[Team.length === TeamB.length + TeamA.length? styles.highlight : '', styles.team].join(' ')}
-						onClick={() => {
-							SetTeam([...TeamA, ...TeamB])
-						}}
+						className={[TeamLabel === "combined" ? styles.highlight : null, styles.team].join(' ')}
+						onClick={() => HandleTeamChange("combined")}
 					>
 						Combined
 					</div>
@@ -119,10 +136,10 @@ const Dashboard = (props) => {
 							<div className={styles.events}>
 								{
 									Events.filter((e) => {
-										return e.technician === user.id;
-									}
-										).map((event, index) => {
-										if(event.type === "booking") {
+											return e.technician === user._id;
+										}
+									).map((event, index) => {
+										if (event.type === "booking") {
 											return <UserBooking
 												index={index}
 												key={index}
@@ -130,7 +147,7 @@ const Dashboard = (props) => {
 												startDate={StartDate}
 												delete={() => SetDeleteEvent(event._id)}
 											/>
-										} else if(event.type === "time_off") {
+										} else if (event.type === "time_off") {
 											return <UserTimeOff
 												index={index}
 												key={index}
@@ -138,7 +155,7 @@ const Dashboard = (props) => {
 												startDate={StartDate}
 												delete={() => SetDeleteEvent(event._id)}
 											/>
-										} else if(event.type === "vacation") {
+										} else if (event.type === "vacation") {
 											return <UserVacation
 												index={index}
 												key={index}
@@ -167,4 +184,10 @@ const Dashboard = (props) => {
 	</PageWrapper>
 }
 
-export default Dashboard;
+const mapStateToProps = (state) => {
+	return {
+		UsersReducer: state.UsersReducer
+	};
+};
+
+export default connect(mapStateToProps, null)(Dashboard);

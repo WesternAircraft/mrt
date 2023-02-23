@@ -56,6 +56,7 @@ const ViewEvent = (props) => {
 	}
 
 	const GenerateEvent = (e) => {
+		console.log(e);
 		switch (e.type) {
 			case "created_event":
 				return <div className={[styles.log, styles.created_event].join(' ')}>

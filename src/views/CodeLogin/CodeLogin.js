@@ -11,6 +11,7 @@ import {AuthenticateUser} from "../../redux/actions/AuthenticateUser";
 import {GetAllAirplanes} from "../../redux/actions/GetAllAirplanes";
 import {GetAllTools} from "../../redux/actions/GetAllTools";
 import {GetAllToolRequests} from "../../redux/actions/GetAllToolRequests";
+import {GetTeamMembers} from "../../redux/actions/GetTeamMembers";
 
 const CodeLogin = (props) => {
 
@@ -62,6 +63,7 @@ const CodeLogin = (props) => {
 		props.GetAllAirplanes();
 		props.GetAllTools();
 		props.GetAllToolRequests();
+		props.GetTeamMembers();
 		SetProcessing(false);
 	}
 
@@ -128,6 +130,7 @@ const mapDispatchToProps = (dispatch) => {
 		GetAllAirplanes: () => dispatch(GetAllAirplanes()),
 		GetAllTools: () => dispatch(GetAllTools()),
 		GetAllToolRequests: () => dispatch(GetAllToolRequests()),
+		GetTeamMembers: () => dispatch(GetTeamMembers())
 	};
 };
 
