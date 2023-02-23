@@ -8,6 +8,7 @@ import NetworkAdapter from "../../api/NetworkAdapter";
 import {connect} from "react-redux";
 import TeamA from '../../data/TeamA';
 import TeamB from '../../data/TeamB';
+import SelectTechnician from "../../components/selects/SelectTechnician/select_technician";
 
 const ChangeTechnician = (props) => {
 
@@ -50,17 +51,10 @@ const ChangeTechnician = (props) => {
 		<div className={styles.form}>
 			<div className={styles.section}>
 				<div className={styles.label}>Technician <span className={styles.required}>*</span></div>
-				<select
-					onChange={(e) => SetForm({...Form, technician: e.target.value})}
-					value={Form.technician}
-				>
-					<option value="">-- Select Technician --</option>
-					{
-						[...TeamA, ...TeamB].map((tech, index) => {
-							return <option value={tech.id} key={index}>{tech.name}</option>
-						})
-					}
-				</select>
+				<SelectTechnician handleChange={(e) => {
+					console.log(e)
+					SetForm({...Form, technician: e.value})
+				}}/>
 			</div>
 			<ButtonBar position={'right'}>
 				<Button color={'#EC7063'} handleClick={props.handleClose}>Cancel</Button>

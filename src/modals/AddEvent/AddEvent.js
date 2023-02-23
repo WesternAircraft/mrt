@@ -8,6 +8,7 @@ import NetworkAdapter from "../../api/NetworkAdapter";
 import {connect} from "react-redux";
 import TeamB from "../../data/TeamB";
 import TeamA from "../../data/TeamA";
+import SelectTechnician from "../../components/selects/SelectTechnician/select_technician";
 
 const AddEvent = (props) => {
 
@@ -31,7 +32,7 @@ const AddEvent = (props) => {
 			SetErrors("Technician, Start Date, End Date, and Event Type are all required fields.");
 			return;
 		}
-		if(Form.airplane === "") {
+		if (Form.airplane === "") {
 			Form.airplane = null;
 		}
 		const result = await NETWORK_ADAPTER.post('/MRT/add-user-event', {
@@ -55,17 +56,10 @@ const AddEvent = (props) => {
 		<div className={styles.form}>
 			<div className={styles.section}>
 				<div className={styles.label}>Technician <span className={styles.required}>*</span></div>
-				<select
-					onChange={(e) => SetForm({...Form, technician: e.target.value})}
-					value={Form.technician}
-				>
-					<option value="">-- Select Technician --</option>
-					{
-						[...TeamA, ...TeamB].map((tech, index) => {
-							return <option value={tech.id} key={index}>{tech.name}</option>
-						})
-					}
-				</select>
+				<SelectTechnician handleChange={(e) => {
+					console.log(e)
+					SetForm({...Form, technician: e.value})
+				}}/>
 			</div>
 			<div className={styles.section}>
 				<div className={styles.label}>Event Type <span className={styles.required}>*</span></div>
