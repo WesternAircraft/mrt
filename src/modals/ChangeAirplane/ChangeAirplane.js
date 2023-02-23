@@ -6,6 +6,7 @@ import Button from "../../components/Button/Button";
 import {useEffect, useState} from "react";
 import NetworkAdapter from "../../api/NetworkAdapter";
 import {connect} from "react-redux";
+import SelectAirplane from "../../components/selects/SelectAirplane/select_airplane";
 
 const ChangeAirplane = (props) => {
 
@@ -47,19 +48,11 @@ const ChangeAirplane = (props) => {
 		<div className={styles.title}>Change Airplane</div>
 		<div className={styles.form}>
 			<div className={styles.section}>
-				<div className={styles.label}>Airplane <span className={styles.required}>*</span></div>
-				<select
-					onChange={(e) => SetForm({...Form, airplane: e.target.value})}
-					value={Form.airplane}
-				>
-					<option value="">-- Select Airplane --</option>
-					{
-						props.AirplanesReducer.Airplanes.map((airplane, index) => {
-							return <option value={airplane._id} key={index}>{airplane.tail_number}</option>
-						})
-					}
-
-				</select>
+				<div className={styles.label}>Airplane</div>
+				<SelectAirplane handleChange={(e) => {
+					console.log(e)
+					SetForm({...Form, airplane: e.value})
+				}}/>
 			</div>
 			<ButtonBar position={'right'}>
 				<Button color={'#EC7063'} handleClick={props.handleClose}>Cancel</Button>

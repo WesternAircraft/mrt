@@ -9,6 +9,7 @@ import {connect} from "react-redux";
 import TeamB from "../../data/TeamB";
 import TeamA from "../../data/TeamA";
 import SelectTechnician from "../../components/selects/SelectTechnician/select_technician";
+import SelectAirplane from "../../components/selects/SelectAirplane/select_airplane";
 
 const AddEvent = (props) => {
 
@@ -102,17 +103,10 @@ const AddEvent = (props) => {
 			<div className={styles.row}>
 				<div className={styles.section}>
 					<div className={styles.label}>Airplane</div>
-					<select
-						onChange={(e) => SetForm({...Form, airplane: e.target.value})}
-						value={Form.airplane}
-					>
-						<option value="">-- Select Airplane --</option>
-						{
-							props.AirplanesReducer.Airplanes.map((airplane, index) => {
-								return <option value={airplane._id} key={index}>{airplane.tail_number}</option>
-							})
-						}
-					</select>
+					<SelectAirplane handleChange={(e) => {
+						console.log(e)
+						SetForm({...Form, airplane: e.value})
+					}}/>
 				</div>
 				<div className={styles.section}>
 					<div className={styles.label}>Work Order</div>
