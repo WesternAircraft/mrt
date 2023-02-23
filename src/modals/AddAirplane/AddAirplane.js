@@ -20,7 +20,6 @@ const AddAirplane = (props) => {
 	const [Errors, SetErrors] = useState("");
 
 	const SubmitForm = async () => {
-		console.log(Form)
 		if (!Form.tail_number || !Form.serial_number) {
 			SetErrors("Tail Number and Serial Number are all required fields.");
 			return;

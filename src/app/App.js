@@ -17,11 +17,13 @@ import {GetAllTools} from "../redux/actions/GetAllTools";
 import ViewEvent from "../views/ViewEvent/ViewEvent";
 import {GetAllToolRequests} from "../redux/actions/GetAllToolRequests";
 import DocumentList from "../views/DocumentList/DocumentList";
+import CodeLogin from "../views/CodeLogin/CodeLogin";
+import {ValidateUserToken} from "../redux/actions/ValidateUserToken";
 
 const App = (props) => {
 
-	const GetUser = async (id) => {
-		const result = await props.GetUserFromIO(id);
+	const GetUser = async (stored_token) => {
+		const result = await props.ValidateUserToken(stored_token);
 		if (result.code === 200) {
 			props.GetAllAirplanes();
 			props.GetAllTools();
@@ -33,12 +35,12 @@ const App = (props) => {
 	useEffect(() => {
 		const run = async () => {
 			console.log("Checking for stored user.")
-			const storedUser = localStorage.getItem('io_auth_token');
-			if (!storedUser) {
+			const stored_token = localStorage.getItem('mrt_io_auth_token');
+			if (!stored_token) {
 				console.log("No stored user found.");
 			} else {
 				console.log("Found stored user.")
-				GetUser(storedUser);
+				await GetUser(stored_token);
 			}
 		}
 		if (!props.UsersReducer.AuthedUser) {
@@ -60,7 +62,7 @@ const App = (props) => {
 							<Route path={'/documents'} exact component={DocumentList}/>
 							<Route path={'/:id'} exact component={ViewEvent}/>
 						</Switch>
-						: <Route path={'/'} exact component={LogIn}/>
+						: <Route path={'/'} exact component={CodeLogin}/>
 				}
 			</div>
 		</HashRouter>
@@ -80,7 +82,8 @@ const mapDispatchToProps = (dispatch) => {
 		ForceUserOut: () => dispatch(ForceUserOut()),
 		GetAllAirplanes: () => dispatch(GetAllAirplanes()),
 		GetAllTools: () => dispatch(GetAllTools()),
-		GetAllToolRequests: () => dispatch(GetAllToolRequests())
+		GetAllToolRequests: () => dispatch(GetAllToolRequests()),
+		ValidateUserToken: (token) => dispatch(ValidateUserToken(token))
 	};
 };
 

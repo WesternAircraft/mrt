@@ -1,23 +1,14 @@
 import styles from './NavigationBar.module.sass';
 import {connect} from "react-redux";
-import {useMsal} from "@azure/msal-react";
-import SignUserOut from "../../utils/functions/SignUserOut";
 import {ForceUserOut} from "../../redux/actions/ForceUserOut";
 import WAI_LOGO from '../../assets/logos/western_aircraft_3.png';
 import {Link} from "react-router-dom";
+import SignOut from "../../modals/SignOut/SignOut";
+import {useState} from "react";
 
 const NavigationBar = (props) => {
 
-	const {
-		instance
-	} = useMsal();
-
-	const SignOut = async () => {
-		props.ForceUserOut();
-		const res = await SignUserOut(instance);
-		localStorage.removeItem('beacon_user');
-		console.log(res);
-	}
+	const [SignOutModal, SetSignOutModal] = useState(false);
 
 	return <div className={styles.navigationBar}>
 		<div className={styles.left}>
@@ -43,9 +34,10 @@ const NavigationBar = (props) => {
 			</div>
 			<i
 				className="fa-regular fa-arrow-right-from-bracket"
-				onClick={() => SignOut()}
+				onClick={() => SetSignOutModal(true)}
 			/>
 		</div>
+		<SignOut show={SignOutModal} handleClose={() => SetSignOutModal(false)}/>
 	</div>
 }
 

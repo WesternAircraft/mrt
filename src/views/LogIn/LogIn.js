@@ -39,7 +39,6 @@ const LogIn = (props) => {
 			return;
 		}
 		console.log("User successfully authenticated...");
-		console.log(AuthResult.payload)
 		if(!PermissionCheck(AuthResult.payload.permissions, ['MRT_MASTER', 'MRT_TECHNICIAN'])){
 			SetForm({...FormTemplate})
 			SetErrors("You are not permitted to access this area.");

@@ -3,28 +3,21 @@ import Modal from "../../wrappers/Modal/Modal";
 import PropTypes from "prop-types";
 import ButtonBar from "../../components/ButtonBar/ButtonBar";
 import Button from "../../components/Button/Button";
-import {useMsal} from "@azure/msal-react";
 import {connect} from "react-redux";
 import SignUserOut from "../../utils/functions/SignUserOut";
 
 const SignOut = (props) => {
 
-	const {
-		instance
-	} = useMsal();
-
-	const SignOut = async () => {
-		await SignUserOut(instance);
-		await props.SignUserOut();
+	const SignUserOut = () => {
+		localStorage.removeItem("mrt_io_auth_token");
+		window.location.reload();
 	}
 
 	return <Modal show={props.show} handleClose={props.handleClose}>
-		<div className={styles.signOut}>
-			SIGN OUT MODAL
-		</div>
-		<ButtonBar position={'right'}>
-			<Button color={'#EC7063'} handleClick={props.handleClose}>No</Button>
-			<Button color={'#58D68D'} long handleClick={() => SignOut()}>Yes</Button>
+		<div className={styles.title}>Sign Out?</div>
+		<ButtonBar position={'center'}>
+			<Button color={'#EC7063'} handleClick={props.handleClose}>Cancel</Button>
+			<Button color={'#7DCEA0'} handleClick={() => SignUserOut()} long>Sign Out</Button>
 		</ButtonBar>
 	</Modal>
 }
