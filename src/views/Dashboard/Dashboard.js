@@ -40,11 +40,11 @@ const Dashboard = (props) => {
 	const HandleTeamChange = (team) => {
 		if (team === "combined") {
 			SetTeam([
-				...props.UsersReducer.TeamMembers.filter((mem) => mem.team && mem.team === "a"),
-				...props.UsersReducer.TeamMembers.filter((mem) => mem.team && mem.team === "b"),
+				...props.UsersReducer.TeamMembers.filter((mem) => mem.team && mem.team === "a" && mem.active),
+				...props.UsersReducer.TeamMembers.filter((mem) => mem.team && mem.team === "b" && mem.active),
 			]);
 		} else {
-			SetTeam([...props.UsersReducer.TeamMembers.filter((mem) => mem.team && mem.team === team)]);
+			SetTeam([...props.UsersReducer.TeamMembers.filter((mem) => mem.team && mem.team === team && mem.active)]);
 		}
 		SetTeamLabel(team);
 	}

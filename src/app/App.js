@@ -18,6 +18,7 @@ import DocumentList from "../views/DocumentList/DocumentList";
 import CodeLogin from "../views/CodeLogin/CodeLogin";
 import {ValidateUserToken} from "../redux/actions/ValidateUserToken";
 import {GetTeamMembers} from "../redux/actions/GetTeamMembers";
+import Users from "../views/Users/Users";
 
 const App = (props) => {
 
@@ -60,6 +61,7 @@ const App = (props) => {
 							<Route path={'/airplanes/:id'} exact component={ViewAirplane}/>
 							<Route path={'/tooling'} exact component={ToolList}/>
 							<Route path={'/documents'} exact component={DocumentList}/>
+							<Route path={'/users'} exact component={Users}/>
 							<Route path={'/:id'} exact component={ViewEvent}/>
 						</Switch>
 						: <Route path={'/'} exact component={CodeLogin}/>

@@ -25,7 +25,7 @@ const SelectTechnician = (props) => {
 
 	useEffect(() => {
 		const temp = [];
-		props.UsersReducer.TeamMembers.filter((mem) => mem.team !== undefined).forEach((mem) => {
+		props.UsersReducer.TeamMembers.filter((mem) => mem.active && mem.team !== undefined && mem.team !== "").forEach((mem) => {
 			temp.push({value: mem._id, label: mem.name});
 		});
 		SetOptions([...temp]);
